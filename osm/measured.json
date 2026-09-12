@@ -1,0 +1,22 @@
+{
+ "Kloster->LundC": 1.65,
+ "LundC->Stangby": 5.14,
+ "Malmo->LundC": 16.47,
+ "Malmo->Kloster": 14.83,
+ "LundC->Eslov": 17.3,
+ "LundC->Hassleholm": 102.85,
+ "LundC->Helsingborg": 69.38,
+ "LundC->Alvesta": 102.85,
+ "LundC->Stockholm": 102.85,
+ "Malmo->Teckomatorp(via Kavlinge)": 33.34,
+ "Malmo->Kavlinge": 24.12,
+ "Kavlinge->LundC": 11.11,
+ "KavlingeStangbyStraight": 7.41,
+ "Teckomatorp->LundC": 20.34,
+ "TeckoStangbyStraight": 15.12,
+ "KlostergårdenStangbyStraight": 6.37,
+ "curveMinRadiusM": 334,
+ "curveAtKm": 1.19,
+ "curveImpliedSpeed": 72,
+ "klosterLundPathKm": 1.65
+}
