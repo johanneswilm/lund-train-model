@@ -50,6 +50,11 @@ nominal of their stated year unless noted.
 
 ## 3. Projects and decisions (status Sept 2026)
 
+- **April 2026 national plan (2026–2037, 1,171 bn SEK):** front-loads the whole Hässleholm–Lund
+  object; four tracks through Lund municipality is named "the single most important measure" for
+  Södra stambanan capacity [S23]. Note: Trafikverket's own 2026 timetable still pointed to traffic
+  on the new tracks around 2043–2048 — the model's base case stays ~2040 with a 2037 acceleration
+  toggle.
 - **Government decision Oct 2023:** two new tracks **Klostergården–Hässleholm**, designed for
   **250 km/h mixed traffic** (max 10‰ so freight can run), program cost frame **28 bn SEK (2021
   prices)**, target ~2040 (ambition to pull to late 2030s) [S7][S13].
@@ -78,12 +83,23 @@ Pros: maximum central capacity, all trains keep serving Lund C, enables Lund Sö
 stop (already Klostergården). Cons: land take/noise in the core, cultural-environment conflicts,
 curve remains (speed unchanged), construction disruption. Cost anchor: 5–7 bn SEK (Lund section, 2020).
 
-**ALT B — outer freight track (cargo bypass).** New double-track chord from Godsstråket
-(Teckomatorp/Kävlinge area) to Södra stambanan at Stångby/Eslöv, west of the city; Stockholm-bound
-freight leaves Lund C. Pros: removes ~60–70 (→120+) freight trains/day incl. dangerous goods from the
-centre; big noise/safety gains; pairs well with Alt A (matches the 2020 pre-study's "+3–4 bn" option);
-frees 2-track capacity for passengers without full 4-tracking. Cons: freight gets a longer route
-(model ~+8–12 km vs via Lund C), does nothing for passenger speed, new line in open landscape.
+**ALT B — outer freight track (cargo bypass), two variants.** Both divert Malmö↔Stockholm freight
+off Lund C. **B1 incremental:** upgrade/double-track the already-existing freight route Lommabanan
+(Malmö–Kävlinge) + Kävlinge–Teckomatorp + Rååbanan Eslöv–Teckomatorp via Marieholm (14.9 km) +
+Eslöv–Stångby; both Kävlinge–Teckomatorp and Rååbanan meeting tracks are on Trafikverket's long-term
+priority list [S21]. It never touches Lund C, but the detour vs via Lund C is **≈ +38.8 km**
+(60.4 km vs 21.6 km, OSM Sep 2026) — note the update draft's "+10–12 km" belongs to B2. Cost
+2–5 bn (assumption). **B2 new-build chord:** straighter double track Kävlinge → Stångby passing
+north-west of Lund, **≈ +10 km**, 100–120 km/h; cost anchors: +3–4 bn add-on (2020 Sweco/Trafikverket
+pre-study [S5]) vs 10–15 bn standalone (Lund Liberalerna Sept 2026 [S22]) — the model exposes both.
+Pros: removes ~60–70 (→120+) freight trains/day incl. dangerous goods from the centre; big
+noise/safety gains; pairs well with Alt A or D; frees central capacity. Cons: freight takes the
+detour hit (≈ +6–10 min trains on B2, ≈ +25–30 min on B1), does nothing for passenger speed, new
+line in open landscape (B2). History: proposed by local parties since 2019 [S18]; Lund municipality
+2020 pre-study priced it and noted most central negative effects disappear if freight leaves the
+core [S19]; FörNyaLund's 10,000-signature referendum drive 2025–26 [S20]; never formally studied by
+Trafikverket; the 2017 state–municipality agreement and Oct-2023 mandate both specify at-grade along
+the existing corridor.
 
 **ALT C — LD/HSR bypass + outer station (Shinkansen-style).** New 250 km/h double track from the
 Klostergården area to Stångby, bypassing Armaturkurvan and Lund C to the west, with an outer station
@@ -176,7 +192,8 @@ Alt C; capacity requires Alt A or B.
 | Item | Value | Basis |
 |---|---|---|
 | Alt A, Lund section | 5–7 bn | [S5] (2020) |
-| Alt B (outer freight track, ~12–15 km chord + yard links) | +3–4 bn on top of A at-grade | [S5] (2020) |
+| Alt B1 (upgrade existing Lommabanan/Kävlinge–Teckomatorp/Rååbanan) | 2–5 bn | ASSUMPTION |
+| Alt B2 (new chord Kävlinge–Stångby, ~10 km) | +3–4 bn add-on (2020) / 10–15 bn standalone (2026) | [S5][S22] (both exposed) |
 | Alt C (250 km/h chord ~12–15 km + outer station) | 10–15 bn | ASSUMPTION — calibrate vs [S7] new-build alts (20–41 bn for ~35 km incl. systems) |
 | Tunnel under Lund (reference) | 18–22 bn (2020) / +10 bn vs program frame | [S5][S6] |
 | Program frame Hässleholm–Lund | 28 bn (2021) | [S13] |
@@ -219,3 +236,9 @@ Alt C; capacity requires Alt A or B.
 - [S15] Citybanan Stockholm: 16.8 bn SEK, 6 km, 2007–2017; Västlänken ~20 bn/8 km (SVT/Trafikverket list); Citytunneln Malmö 8.5–9.5 bn (2001 prices) vs 3.4 bn 1992 estimate (Wikipedia/GP).
 - [S16] Citytunneln Malmö technical requirements: freight/diesel banned except exceptional cases; emergency-brake override required; storm Sven 2013 flood near-miss (sv.wikipedia Citytunneln).
 - [S17] Sveriges Radio 2026-08-21: Trafikverket — tunnel "3–4 gånger dyrare, större utsläpp, betydligt längre tid"; Sydsvenskan 2025-10-15: tunnel "dyrare och sämre", Klosterkyrkan (1300s) could be affected.
+- [S18] Sydsvenskan 2019-07-21: Lund parties want outer freight track + tunnel.
+- [S19] Lund municipality press release 2020-03-16 (Sweco pre-study): yttre godsbana removes most negative central effects; +3–4 bn pricing.
+- [S20] FörNyaLund (fornyalund.se, 2025–2026): outer godsspår + tunnel campaign; 10,000-signature referendum drive (flyer verified, deadline 1 Feb 2026); notes the 2017 state–municipality agreement. (Jan 2026 seminar not independently verified.)
+- [S21] Wikipedia "Järnväg i Skåne" + jarnvag.net Rååbanan guide: Lommabanan/Söderåsbanan freight routing; Rååbanan Eslöv–Teckomatorp 15 km via Marieholm (OSM measured 14.9 km); long-term meeting-track priorities Kävlinge–Teckomatorp and the Rååbanan. (Route continuity + detour verified on OSM, see osm/measured.json.)
+- [S22] Lunds Liberalerna 2026-09-04 (lund.liberalerna.se): outer freight track for long trains estimated at a further 10–15 bn SEK (in a tunnel+outer-track context). Verified.
+- [S23] Regeringen.se 2026-04-26 + Trafikverket 2026-08-21: national plan 2026–2037, 1,171 bn SEK, front-loads Hässleholm–Lund; four tracks through Lund = "den allra viktigaste åtgärden" for Södra stambanan. Verified. (Trafikverket's earlier 2026 timetable mentioned 2043–2048 for the new tracks — model keeps ~2040 base + 2037 acceleration toggle.)

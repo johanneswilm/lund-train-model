@@ -66,8 +66,15 @@ backend, no build step; everything client-side; save as lund_rail_model.html) th
 ## Alternatives (user-togglable; also allow combinations A+B and A+C)
 - **A — 4 tracks at grade** through Klostergården–Lund C–Stångby (platforms extended; demolitions
   at the curve; curve speed unchanged). Segregation: user chooses pairing (fast/slow or pax/freight).
-- **B — outer freight track**: chord Teckomatorp/Kävlinge→Stångby (~+10 km for Stockholm-bound
-  freight); removes freight from Lund C; user sets chord length/speed/cost.
+- **B — outer freight track, two variants:** **B1 incremental** (upgrade/double-track existing
+  Lommabanan Malmö–Kävlinge + Kävlinge–Teckomatorp + Rååbanan Eslöv–Teckomatorp via Marieholm 14.9 km
+  + Eslöv–Stångby; both meeting-track sections on Trafikverket's long-term list; 2–5 bn assumption;
+  detour ≈ **+38.8 km** vs via Lund C, incl. single-track meet penalty) and **B2 new chord**
+  (Kävlinge→Stångby north-west of Lund, ≈ +10 km, 100–120 km/h). Both remove freight from Lund C.
+  B1/B2 selectable with different per-km costs; cost anchors +3–4 bn add-on (2020) vs 10–15 bn
+  standalone (2026) exposed as scenarios. History info toggle: local parties since 2019, FörNyaLund
+  referendum drive 2026, never formally studied by Trafikverket. *(Correction to the update draft:
+  the +10–12 km detour figure is B2; the existing B1 route measures +38.8 km on OSM.)*
 - **C — LD/HSR bypass + outer station "Lund Västra"**: 250 km/h double track west of the centre,
   LD/HSR stops only at the outer station, regional keeps Lund C; feeder 5 min. Optionally also allow
   "no-stop bypass" (LD trains skip Lund entirely — show the catchment loss).
@@ -107,3 +114,13 @@ backend, no build step; everything client-side; save as lund_rail_model.html) th
 4. The dashboard must surface a numeric break-even: peak tph/dir at which each alternative's BCR
    crosses 1.0.
 5. Everything in the About panel + tooltips; all inputs editable; state saved to localStorage.
+6. Outer-track-specific: compute the freight detour penalty explicitly (+10 km ≈ +6–10 min for B2;
+   +38.8 km ≈ +25–30 min plus single-track meet penalty for B1) vs centre externality gains; show B's
+   break-even in freight trains/day; B1 vs B2 must appear in the tornado.
+7. Tunnel-specific: with defaults Alt D must lose on BCR vs Alt A, but the tornado must state the
+   land-value + VoT + overrun-probability frontier where it wins; selecting D without B must flag
+   "freight unsolved"; a tunnel-closure day must show corridor-wide delay (no diversion) vs at-grade's
+   lower-consequence failures.
+
+Also: scenario toggle "late-2030s acceleration" (April 2026 national plan front-loading, 1,171 bn
+SEK, four tracks through Lund = key Södra stambanan measure) alongside the ~2040 base case.

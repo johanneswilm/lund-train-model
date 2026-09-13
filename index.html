@@ -95,7 +95,8 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
 <body>
 <header>
   <h1>Lund rail bottleneck — when does 2&rarr;4 tracks make sense?</h1>
-  <span class="sub">Strategic sketch model: Alt A (4 tracks at grade) vs B (outer freight track) vs C (LD/HSR bypass + Lund Västra) vs D (tunnel under the city). Klostergården–Lund C–Stångby, ~6.8 km. Prior decisions are treated as revocable — the ANSWER card follows the numbers, not the politics.</span>
+  <span class="sub"><b style="color:#b3261e">UNOFFICIAL SKETCH — AI-assisted, not reviewed by any professional, not affiliated with Trafikverket, Region Skåne or Lunds kommun. Do not use for decisions or public claims; see "About / assumptions".</b><br>
+  Strategic sketch model: Alt A (4 tracks at grade) vs B (outer freight track) vs C (LD/HSR bypass + Lund Västra) vs D (tunnel under the city). Klostergården–Lund C–Stångby, ~6.8 km. Prior decisions are treated as revocable — the ANSWER card follows the numbers, not the politics.</span>
   <span class="spacer"></span>
   <button class="btn" id="btnAbout">About / assumptions</button>
   <button class="btn warnb" id="btnReset">Reset defaults</button>
@@ -132,11 +133,11 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
           <marker id="arrN" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#57616d"/></marker>
           <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#5c940d"/></marker>
           <!-- invisible helper routes used by the animation -->
-          <path id="rPaxSth" fill="none" stroke="none" d="M 500 700 L 500 585 C 618 585, 618 500, 500 500 L 500 456 C 582 432, 662 362, 763 259"/>
+          <path id="rPaxSth" fill="none" stroke="none" d="M 500 700 L 500 585 C 618 585, 618 500, 500 500 L 500 456 C 570 410, 583 362, 630 335 C 677 308, 720 285, 763 259"/>
           <path id="rPaxGbg" fill="none" stroke="none" d="M 500 700 L 500 585 C 618 585, 618 500, 500 500 L 500 456 C 418 432, 328 352, 237 259"/>
-          <path id="rFrSth" fill="none" stroke="none" d="M 500 700 L 500 585 C 618 585, 618 500, 500 500 L 500 456 C 582 432, 662 362, 763 259"/>
-          <path id="rFrGbg" fill="none" stroke="none" d="M 478 695 C 395 645, 320 555, 297 462 C 283 402, 268 340, 258 300 C 250 278, 245 266, 241 259 C 236 248, 231 241, 226 234"/>
-          <path id="rFrChord" fill="none" stroke="none" d="M 478 695 C 395 645, 320 555, 297 462 C 283 402, 268 340, 258 300 C 150 285, 130 215, 250 195 C 380 175, 560 235, 630 328 C 640 352, 648 370, 656 388"/>
+          <path id="rFrSth" fill="none" stroke="none" d="M 500 700 L 500 585 C 618 585, 618 500, 500 500 L 500 456 C 570 410, 583 362, 630 335 C 677 308, 720 285, 763 259"/>
+          <path id="rFrGbg" fill="none" stroke="none" d="M 478 695 C 395 645, 320 555, 297 462 C 291 425, 296 382, 322 346 C 300 318, 288 306, 258 300 C 250 278, 245 266, 241 259 C 236 248, 231 241, 226 234"/>
+          <path id="rFrChord" fill="none" stroke="none" d="M 478 695 C 395 645, 320 555, 297 462 C 291 425, 296 382, 322 346 C 350 255, 470 215, 630 335 C 677 308, 720 285, 763 259"/>
           <path id="rLdBypass" fill="none" stroke="none" d="M 500 700 L 500 585 C 385 585, 345 545, 342 500 C 339 458, 352 430, 405 420 C 455 411, 488 428, 497 447 C 520 455, 600 420, 763 259"/>
           <path id="rTunnel" fill="none" stroke="none" d="M 500 700 L 500 500 L 500 456 C 568 438, 608 392, 630 340 C 658 364, 700 320, 763 259"/>
         </defs>
@@ -148,7 +149,7 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
           <line x1="486" y1="700" x2="486" y2="585"/><line x1="495" y1="700" x2="495" y2="585"/>
           <line x1="505" y1="700" x2="505" y2="585"/><line x1="514" y1="700" x2="514" y2="585"/>
         </g>
-        <text x="522" y="648" class="svgTxtS">4 tracks Malmö–Lund since Dec 2023 ("Fyrspåret", 11 km) · design capacity 460&#8594;650 trains/day [S1][S2]</text>
+        <text x="522" y="690" class="svgTxtS">4 tracks Malmö–Lund since Dec 2023 ("Fyrspåret", 11 km) · design capacity 460&#8594;650 trains/day [S1][S2]</text>
         <circle cx="500" cy="700" r="5" fill="#212529"/>
         <text x="512" y="706" class="svgTxt" font-weight="700">Malmö C</text>
         <text x="512" y="720" class="svgTxtS">(4-track section south of Lund)</text>
@@ -183,26 +184,27 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
         <text x="530" y="448" class="svgTxtS">under Södra stambanan; other crossing movements at grade</text>
         <!-- branches -->
         <path d="M 492 456 C 418 432, 328 352, 237 259" fill="none" stroke="#343a40" stroke-width="2.5" marker-end="url(#arrW)"/>
-        <path d="M 508 456 C 582 432, 662 362, 763 259" fill="none" stroke="#343a40" stroke-width="2.5" marker-end="url(#arrW)"/>
+        <path d="M 508 456 C 570 410, 583 362, 630 335 C 677 308, 720 285, 763 259" fill="none" stroke="#343a40" stroke-width="2.5" marker-end="url(#arrW)"/>
         <text x="36" y="228" class="svgTxt" font-weight="700">VÄSTKUSTBANAN</text>
         <text x="36" y="242" class="svgTxtS">&#8594; Helsingborg · Göteborg (&#8804;200 km/h; Lund–Kävlinge pax-only 25‰)</text>
         <text x="700" y="240" class="svgTxt" font-weight="700">SÖDRA STAMBANAN</text>
         <text x="700" y="254" class="svgTxtS">&#8594; Eslöv · Hässleholm · Stockholm (&#8804;200 km/h)</text>
         <circle cx="322" cy="346" r="3.2" fill="#212529"/><text x="312" y="340" text-anchor="end" class="svgTxtS">Kävlinge</text>
         <circle cx="240" cy="258" r="3.2" fill="#212529"/><text x="228" y="252" text-anchor="end" class="svgTxtS">Åstorp</text>
-        <circle cx="630" cy="335" r="3.2" fill="#212529"/><text x="642" y="331" class="svgTxtS">Stångby</text>
+        <circle cx="630" cy="335" r="3.2" fill="#212529"/><text x="644" y="352" class="svgTxtS">Stångby</text>
         <circle cx="700" cy="300" r="3.2" fill="#212529"/><text x="712" y="304" class="svgTxtS">Eslöv</text>
         <!-- Godsstråket -->
-        <path d="M 478 695 C 395 645, 320 555, 297 462 C 283 402, 268 340, 258 300 C 250 278, 245 266, 241 259" fill="none" stroke="#5c940d" stroke-width="2.5" stroke-dasharray="8 5" marker-end="url(#arrG)"/>
+        <path d="M 478 695 C 395 645, 320 555, 297 462 C 291 425, 296 382, 322 346 C 300 318, 288 306, 258 300 C 250 278, 245 266, 241 259" fill="none" stroke="#5c940d" stroke-width="2.5" stroke-dasharray="8 5" marker-end="url(#arrG)"/>
         <circle cx="258" cy="300" r="3.2" fill="#5c940d"/><text x="252" y="290" text-anchor="end" class="svgTxtS" fill="#5c940d">Teckomatorp</text>
         <text x="60" y="565" class="svgTxtS" fill="#5c940d">GODSSTRÅKET genom Skåne — freight corridor Malmö–Kävlinge–</text>
         <text x="60" y="578" class="svgTxtS" fill="#5c940d">Teckomatorp–Åstorp–Ängelholm · Malmö&#8596;Göteborg freight avoids Lund [S3]</text>
         <!-- Alt B -->
         <g id="gB" style="display:none">
-          <path d="M 258 300 C 150 285, 130 215, 250 195 C 380 175, 560 235, 630 328 C 640 352, 648 370, 656 388" fill="none" stroke="#2f9e44" stroke-width="2.5" stroke-dasharray="9 5"/>
-          <text x="128" y="172" class="svgTxt" fill="#2f9e44" font-weight="700">ALT B — outer freight track</text>
-          <text x="128" y="186" class="svgTxtS" fill="#2f9e44">Teckomatorp/Kävlinge &#8594; Stångby (~+10 km, 100–120 km/h)</text>
-          <text x="128" y="199" class="svgTxtS" fill="#2f9e44">removes freight incl. dangerous goods from Lund C · +3–4 bn SEK [S5]</text>
+          <path d="M 322 346 C 350 255, 470 215, 630 335" fill="none" stroke="#2f9e44" stroke-width="2.5" stroke-dasharray="9 5"/>
+          <text x="300" y="140" class="svgTxt" fill="#2f9e44" font-weight="700">ALT B — outer freight track (B1 existing route / B2 drawn chord)</text>
+          <text x="300" y="154" class="svgTxtS" fill="#2f9e44">B2 (drawn): Godsstråket west of Lund &#8594; Kävlinge &#8594; new chord &#8594; Stångby (~+10 km); joins the main line at both ends</text>
+          <text x="300" y="167" class="svgTxtS" fill="#2f9e44">B1: upgrade existing Lommabanan + Kävlinge–Teckomatorp + Rååbanan via Marieholm + Eslöv–Stångby (≈+39 km, 2–5 bn)</text>
+          <text x="300" y="180" class="svgTxtS" fill="#2f9e44">removes freight incl. dangerous goods from Lund C · B2 anchors +3–4 bn (2020) vs 10–15 bn standalone (2026) [S5][S22]</text>
         </g>
         <!-- Alt C -->
         <g id="gC" style="display:none">
@@ -215,9 +217,13 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
         </g>
         <!-- Alt D -->
         <g id="gD" style="display:none">
-          <path d="M 500 585 L 500 500 L 500 456 C 568 438, 608 392, 630 340 C 658 364, 700 320, 763 259" fill="none" stroke="#495057" stroke-width="3" stroke-dasharray="11 6"/>
-          <text x="520" y="556" class="svgTxt" fill="#495057" font-weight="700">ALT D — tunnel option: ~6 km tubes + underground 6-track Lund C</text>
-          <text x="520" y="570" class="svgTxtS" fill="#495057">18–22 bn SEK (2020) + overrun risk premium · fixes speed AND barrier [S5]</text>
+          <path d="M 496 585 L 496 500 L 496 456 C 564 438, 604 392, 626 338" fill="none" stroke="#495057" stroke-width="1.6" stroke-dasharray="9 5"/>
+          <path d="M 504 585 L 504 500 L 504 456 C 572 438, 612 392, 634 338" fill="none" stroke="#495057" stroke-width="1.6" stroke-dasharray="9 5"/>
+          <rect x="432" y="503" width="136" height="17" fill="none" stroke="#495057" stroke-width="1.6" stroke-dasharray="6 4"/>
+          <text x="434" y="534" class="svgTxtS" fill="#495057">underground station box</text>
+          <text x="430" y="614" class="svgTxt" fill="#495057" font-weight="700">ALT D — tunnel: paired tubes Klostergården–Stångby + underground 6-track Lund C</text>
+          <text x="430" y="628" class="svgTxtS" fill="#495057">18–22 bn (2020) + overrun premium (Hallandsås ~11×) · freight banned &#8658; needs B [S14][S16]</text>
+          <text x="430" y="641" class="svgTxtS" fill="#495057">closure = no corridor diversion · settlement risk to Klosterkyrkan [S16][S17]</text>
         </g>
         <g id="gTrains"></g>
       </svg>
@@ -233,7 +239,7 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
       </div>
     </section>
     <section class="grid2">
-      <div class="card"><h3>Capacity vs peak demand (per direction)</h3><div class="chartNote">Utilisation of the central section, all types, current mix proportions. Dashed vertical line = current demand. Alt C's line stays high: it adds speed, not central capacity.</div><svg id="capChart" width="100%" height="300"></svg></div>
+      <div class="card"><h3>Capacity vs peak demand (per direction)</h3><div class="chartNote">Utilisation of the busiest central track pair, all types, current mix proportions. Dashed vertical line = current demand. Alt C's line stays high: it adds speed, not central capacity.</div><svg id="capChart" width="100%" height="300"></svg></div>
       <div class="card"><h3>Secondary delay distribution — selected package vs do-nothing</h3><div class="chartNote">Monte Carlo (200+ runs, 3-hour repeating timetable, FCFS conflict resolution). Positive skew = knock-on delays from congestion.</div><svg id="delayHist" width="100%" height="300"></svg></div>
     </section>
     <section class="grid2">
@@ -249,17 +255,17 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
 <div id="aboutModal"><div id="aboutBox">
   <button class="closeX" id="aboutClose">&times;</button>
   <h2>About this model</h2>
-  <div class="disc"><b>Disclaimer.</b> This is a <b>strategic sketch model</b> for exploring trade-offs, <b>not an engineering simulation</b> and not a Trafikverket product. Capacity, delay and cost-benefit figures are order-of-magnitude estimates from public sources plus flagged assumptions; they must not be used for design or investment decisions.</div>
+  <div class="disc"><b>Disclaimer.</b> This is a <b>strategic sketch model</b> for exploring trade-offs, <b>not an engineering simulation</b> and not a Trafikverket product. Capacity, delay and cost-benefit figures are order-of-magnitude estimates from public sources plus flagged assumptions; they must not be used for design or investment decisions. <b>THIS MODEL WAS MADE BY NON-PROFESSIONALS USING PUBLIC AVAILABLE DATA AND ARTIFICIAL INTELLIGENCE.</b></div>
   <h4>Key modelling choices (and why)</h4>
   <ul>
     <li><b>Decision neutrality.</b> Earlier decisions can be revoked, so every package — including the tunnel — is scored by the same capacity/delay/CBA machinery. Where Trafikverket has ruled (e.g. against the tunnel, 2025–26 [S6][S17]) that is shown as factual context and baked into default cost/risk parameters, which you are free to change. The ANSWER card follows the numbers only.</li>
-    <li><b>Geography is measured, not guessed.</b> Section lengths, chord detours and the curve radius come from OpenStreetMap rail geometry (Sep 2026): Klostergården–Lund C 1.65 km, Lund C–Stångby 5.14 km (bottleneck ≈ 6.8 km), Malmö–Lund 16.5 km, Kävlinge-origin freight chord ≈ +10 km, Teckomatorp-origin ≈ +27 km, Lund–Stockholm 580 km, min curve radius ≈ 350 m just south of Lund C (cant speed ≈ 72–74 km/h — consistent with the 80 km/h default).</li>    <li><b>4-tracking is a capacity measure, not a speed measure.</b> Every train already slows at Armaturkurvan, and Alt A keeps the curve at grade — so Alt A leaves curve speed untouched by design. Speed requires realignment or Alt C; capacity requires Alt A or B. The model enforces this and shows it in the travel-time module.</li>
+    <li><b>Geography is measured, not guessed.</b> Section lengths, chord detours and the curve radius come from OpenStreetMap rail geometry (Sep 2026) and were cross-checked on a scale-calibrated Google Maps screenshot (200 m scale bar = 76 px → 2.63 m/px): Klostergården–Lund C 1.65 km, Lund C–Stångby 5.14 km (bottleneck ≈ 6.8 km), Malmö–Lund 16.5 km, Kävlinge-origin freight chord ≈ +10 km, Teckomatorp-origin ≈ +27 km, Lund–Stockholm 580 km, min curve radius ≈ 335–355 m just south of Lund C (200 m-window circle fits: 336 m minimum, 353 m over the main arc; the fitted circle tracks the rail rendering on the screenshot). Alt B's new chord links the western Godsstråket (Malmö–Kävlinge, west of Lund) at Kävlinge to the Södra stambanan at Stångby — so the new build crosses north-west of the city; the purely western route (Godsstråket all the way via Åstorp–Hässleholm) already exists but is a much longer detour. At R≈340 m an 80 km/h limit needs ≈220 mm of total cant — within reach of max cant (≈150–160 mm) plus ≈60–70 mm cant deficiency (~0.4–0.5 m/s² residual lateral); much above ~90 km/h is not. The 80 km/h default is therefore geometrically plausible, but verify the linebook value.</li>    <li><b>4-tracking is a capacity measure, not a speed measure.</b> Every train already slows at Armaturkurvan, and Alt A keeps the curve at grade — so Alt A leaves curve speed untouched by design. Speed requires realignment or Alt C; capacity requires Alt A or B. The model enforces this and shows it in the travel-time module.</li>
     <li><b>Capacity</b> = trains/hour from weighted occupation time (run time × factor + dwell × factor + separation buffer + junction conflicts), capped by the design figure, per track pair. Heterogeneity (200 km/h pax vs 90–120 km/h freight) raises occupation time and lowers practical capacity below the 20–22 tph/dir design value — typically to ~12–14 tph/dir mixed.</li>
     <li><b>Delays</b>: hourly timetable built greedily (LD first, regional, freight in gaps), then Monte Carlo with exponential primary delays; conflicts resolved first-come-first-served. Punctuality = share of trains &#8804;5 min.</li>
     <li><b>CBA</b>: Swedish ASEK-style defaults (3.5% discount, 40-yr horizon, VoT 550/230/140 SEK/h). Benefits: passenger time savings, reliability (&#8776;1.5 SEK per expected delay-minute per passenger), freight train-hour value, externalities toggles. "Congestion relief" credit uses a rule-of-half generated-traffic approximation when demand exceeds do-nothing capacity.</li>
     <li><b>Alt D couples to Alt B</b>: Swedish practice bans freight/diesel from long city tunnels (Citytunneln Malmö precedent), so D cannot remove freight from the equation by itself.</li>
   </ul>
-  <h4>Key facts used (see fact sheet &#167;9 for sources S1–S17)</h4>
+  <h4>Key facts used (see fact sheet &#167;9 for sources S1–S23)</h4>
   <ul>
     <li>Lund C: ~40 000 pax/day, 6 platform tracks, 3rd busiest in Sweden; junction of Västkustbanan and Södra stambanan [S4].</li>
     <li>4 tracks Malmö–Lund since Dec 2023; remaining 2-track bottleneck Klostergården–Lund C–Stångby ~6 km, design 20–22 tph/dir [S1][S2][S7].</li>
@@ -271,13 +277,28 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
   </ul>
   <h4>Assumptions that need verification from Trafikverket sources</h4>
   <ul>
-    <li><b>Armaturkurvan speed limit</b> (default 80 km/h) — get the linebook/BIS value; also exact curvature.</li>
+    <li><b>Armaturkurvan speed limit</b> (default 80 km/h) — get the linebook/BIS value. Curvature is measured (R ≈ 335–355 m from OSM + screenshot), so the 80 km/h default is geometrically plausible; the posted limit still needs confirming.</li>
     <li>Current timetable paths and punctuality at Lund C throat — Trafikverket TIS/Först data or LÖT demand model, for calibration of junction conflicts and delay levels.</li>
+    <li><b>Alt B1 existing route</b> — confirm line capacity/speeds and single-track meet constraints on Lommabanan, Kävlinge–Teckomatorp and Rååbanan (Eslöv–Teckomatorp via Marieholm, 14.9 km), and the long-term priority-list status of meeting tracks. Model uses the OSM-measured +38.8 km detour (Malmö–Kävlinge–Teckomatorp–Eslöv–Stångby 60.4 km vs 21.6 km via Lund C) — the update draft's "+10–12 km" was the B2 figure.</li>
+    <li><b>Alt B2 alignment/cost</b> — the new Kävlinge→Stångby chord has no formal Trafikverket study; cost anchors +3–4 bn add-on (2020) vs 10–15 bn standalone (2026) both exposed in the slider. Corridor reservation in north-west Lund municipality + Stångby per the 2024 comprehensive plan.</li>
+    <li><b>National-plan acceleration</b> — the April 2026 plan front-loads Hässleholm–Lund (1,171 bn SEK frame; four tracks through Lund = key measure [S23]), but Trafikverket's 2026 timetable still pointed to 2043–2048. Confirm the current plan for the corridor; the toggle brackets 2037 vs base 2040.</li>
     <li>Fehmarn Bält ramp-up (2029 vs German-side ~2034), Öresundståg fleet renewal, Swedish HSR policy status.</li>
     <li>Demolition/compensation cost at Armaturkurvan; land-value uplift of decking ("Lund+" ~2 bn).</li>
     <li>Alt C cost (no official estimate; model default 10–15 bn calibrated against new-build alternatives 20–41 bn for ~35 km [S7]).</li>
+    <li>Citytunneln precedents for Alt D: freight/diesel ban, emergency-brake override, storm-Sven 2013 flood near-miss, closure/resilience assumptions [S15][S16]; tunnel settlement/heritage risk to Klosterkyrkan [S17].</li>
     <li>Occupation factors (dwell/run factors, buffers) are sketch calibration values — ERTMS L2 signalling assumed.</li>
   </ul>
+  <h4>History &amp; status (context — the model scores alternatives independently of it)</h4>
+  <details class="group"><summary>2017–2026 timeline and current status</summary>
+    <ul>
+      <li><b>2017:</b> state–municipality agreement fixed four tracks at grade Högevall–Lund C–Stångby, politically foreclosing alternatives.</li>
+      <li><b>July 2019:</b> a majority of Lund's parties wanted an outer freight track + tunnel [S18].</li>
+      <li><b>2020:</b> Lund municipality's Sweco pre-study prices the outer track at +3–4 bn and notes most central negative effects disappear if freight leaves the core [S19].</li>
+      <li><b>2023–2026:</b> FörNyaLund campaigns for "yttre godsspår + tunnel", collecting 10,000 signatures for a local referendum (deadline 1 Feb 2026); seminar Jan 2026 [S20].</li>
+      <li><b>April 2026:</b> national plan 2026–2037 (1,171 bn SEK) front-loads Hässleholm–Lund; four tracks through Lund = the single most important Södra stambanan measure [S23].</li>
+      <li><b>Status:</b> the outer freight track has never had a formal Trafikverket localization study; Trafikverket maintains the new tracks follow the existing corridor. Benefits accrue mostly to Lund while 4-tracking serves the whole Malmö–Stockholm corridor — freight takes the detour hit.</li>
+    </ul>
+  </details>
 </div></div>
 <script>
 "use strict";
@@ -294,9 +315,16 @@ const PKG_NAME = {dn:"Do nothing (2 tracks)", A:"A — 4 tracks at grade", B:"B 
                   DC:"D+C+B — tunnel + LD/HSR bypass + chord",
                   ADB:"A+D+B — tunnel + at-grade 4-track + chord",
                   ADC:"A+D+C+B — everything built (surface tracks as spare)"};
+/* short labels for chips/tables: spell out combinations, incl. the B implied by D */
+const PKG_LABEL = {dn:"dn", DB:"D+B", DC:"D+C+B", ADB:"A+D+B", ADC:"A+D+C+B"};
+function pkgLabel(p){ return PKG_LABEL[p] || p; }
 const PKG_COLOR = {dn:"#adb5bd", A:"#1971c2", B:"#2f9e44", C:"#7048e8", AB:"#0c8599", AC:"#e8590c", BC:"#74b816", ABC:"#0b7285", DB:"#495057", DC:"#c2255c", ADB:"#364fc7", ADC:"#862e9c"};
 const TYPES = ["reg","ld","fr"];
 const TYPE_NAME = {reg:"regional", ld:"long-distance", fr:"freight"};
+/* B1 (existing Rååbanan route via Marieholm) measured on OSM Sep 2026:
+   Malmö–Kävlinge 24.1 + Kävlinge–Teckomatorp 9.2 + Teckomatorp–Eslöv 14.9 + Eslöv–Stångby 12.2 = 60.4 km,
+   vs 21.6 km via Lund C ⇒ +38.8 km. The "+10–12 km" figure in the update draft belongs to B2. */
+const B1_EXTRA_KM = 38.8;
 
 /* ---------------- parameter definitions (UI) ---------------- */
 const GROUPS = [
@@ -325,7 +353,7 @@ const PARAMS = [
  {id:"baseTimeCph", g:"traffic", label:"Typical Lund↔Copenhagen time today", min:15, max:120, step:5, def:40, unit:"min", tip:`${A}.`},
  {id:"shareLund", g:"traffic", label:"LD passengers using Lund (originating)", min:0, max:100, step:5, def:40, unit:"%", tip:`Share of LD passengers who board/alight at Lund — they pay the feeder/transfer penalty under Alt C (${A}).`},
  // infra
- {id:"curveSpeed", g:"infra", label:"Armaturkurvan curve speed", min:40, max:160, step:5, def:80, unit:"km/h", tip:`${A} — VERIFY against Trafikverket linebook/BIS. OSM geometry (Sep 2026) gives min radius ≈ 350 m just south of Lund C → cant-equilibrium speed ≈ 72–74 km/h at normal cant, so 80 is plausible (X2000 tilt retired 2022). Watch what happens — and what doesn't — when you raise it.`},
+ {id:"curveSpeed", g:"infra", label:"Armaturkurvan curve speed", min:40, max:160, step:5, def:80, unit:"km/h", tip:`${A} — VERIFY against Trafikverket linebook/BIS. Curve geometry measured from OSM rail data and cross-checked on a scale-calibrated Google Maps screenshot (Sep 2026; 200 m bar = 76 px): minimum radius ≈ 335–355 m just south of Lund C. At R≈340 m, 80 km/h requires ≈220 mm total cant (max cant ~150–160 mm + ~60–70 mm deficiency) — plausible; above ~90 km/h it is not. X2000 tilt retired 2022. Watch what happens — and what doesn't — when you raise it.`},
  {id:"lenSouth", g:"infra", label:"Section length Klostergården–Lund C", min:1, max:6, step:0.05, def:1.65, unit:"km", tip:`Measured 1.65 km on OpenStreetMap rail geometry (Sep 2026). Sharp curve (Armaturkurvan) lies on this piece.`},
  {id:"lenNorth", g:"infra", label:"Section length Lund C–Stångby", min:2, max:10, step:0.05, def:5.15, unit:"km", tip:`Measured 5.14 km on OpenStreetMap. Total bottleneck ≈ 6.8 km — matches the "~6 km" figure [S7].`},
  {id:"lineSpeedPax", g:"infra", label:"Line speed, passenger (off-curve)", min:120, max:250, step:10, def:200, unit:"km/h", tip:`Västkustbanan/Södra stambanan max 200 km/h [S7] (${F}).`},
@@ -338,12 +366,14 @@ const PARAMS = [
  {id:"runFactor", g:"infra", label:"Run-time occupation factor", min:0, max:0.5, step:0.05, def:0.25, unit:"×", tip:`Share of section run time consuming capacity (blocks overlap) — calibration (${A}). Raising curve speed changes only this small term: the section is headway-bound.`},
  {id:"pairing", g:"infra", label:"Alt A segregation pairing", type:"select", def:"pf", opts:[["pf","passenger | freight"],["fs","fast (LD) | slow (reg+fr)"]], tip:`How trains are split across the two track pairs when Alt A is built (${A} — user choice).`},
  {id:"bypassExtra", g:"infra", label:"Alt C bypass extra length", min:0, max:8, step:0.5, def:1, unit:"km", tip:`Klostergården→Stångby straight-line is 6.4 km vs 6.8 km via Lund C (OSM) — a western bypass is roughly the SAME length; allow ~1 km for junction ramps + Lund Västra station (${A}).`},
- {id:"chordLen", g:"infra", label:"Alt B chord extra length", min:2, max:30, step:0.5, def:10, unit:"km", tip:`Extra rail-km for Malmö↔Stockholm freight vs via Lund C (OSM measurements, Sep 2026): chord from KÄVLINGE ≈ +10 km (Malmö–Kävlinge 24.1 + Kävlinge–Stångby ~8.0 vs Malmö–Lund–Stångby 21.6) — matches the 2020 pre-study's 8–12 km [S5]; a Teckomatorp-origin chord would be ≈ +27 km.`},
- {id:"chordSpeed", g:"infra", label:"Alt B chord speed", min:60, max:160, step:5, def:110, unit:"km/h", tip:`100–120 km/h on the freight chord [S11] (${A}).`},
+ {id:"chordLen", g:"infra", label:"Alt B2 chord extra length", min:2, max:30, step:0.5, def:10, unit:"km", tip:`B2 new-build chord, extra rail-km for Malmö↔Stockholm freight vs via Lund C (OSM, Sep 2026): Kävlinge → Stångby ≈ +10 km (Malmö–Kävlinge 24.1 + Kävlinge–Stångby ~8.0 vs Malmö–Lund–Stångby 21.6) — matches the 2020 pre-study's 8–12 km [S5]. Ignored when B1 is selected (B1 uses the measured +38.8 km existing route).`},
+ {id:"chordSpeed", g:"infra", label:"Alt B chord/route speed", min:60, max:160, step:5, def:110, unit:"km/h", tip:`100–120 km/h on the new chord / existing freight route [S11] (${A}).`},
+ {id:"bVariant", g:"infra", label:"Alt B variant (when B is on)", type:"select", def:"b2", opts:[["b2","B2 — new chord Kävlinge→Stångby"],["b1","B1 — upgrade existing Rååbanan route"]], tip:`B2: new-build chord ≈ +10 km, 100–120 km/h. B1 incremental: upgrade/double-track the EXISTING freight route Lommabanan (Malmö–Kävlinge) + Kävlinge–Teckomatorp + Rååbanan Eslöv–Teckomatorp via Marieholm (14.9 km) + Eslöv–Stångby — no new alignment through open landscape, but ≈ +38.8 km detour vs via Lund C (OSM: 60.4 km vs 21.6 km; the delta draft's "+10–12 km" was the B2 figure), cost 2–5 bn (${A}), single-track meets add the penalty below.`},
+ {id:"bMeetPen", g:"infra", label:"B1 single-track meet penalty", min:0, max:10, step:0.5, def:2, unit:"min/train", tip:`Used only with B1: waiting/meet time per freight train on the single-track Rååbanan and Kävlinge–Teckomatorp sections (${A}, calibrate vs timetable).`},
  {id:"feederMin", g:"infra", label:"Alt C feeder time (centre→Lund Västra)", min:2, max:15, step:0.5, def:5, unit:"min", tip:`Tram/bus people-mover, Shin-style (${A} — cf. Shin-Osaka/Båstad precedent §4).`},
  {id:"waitMin", g:"infra", label:"Alt C avg feeder wait", min:0, max:15, step:0.5, def:5, unit:"min", tip:`Half the feeder headway (${A}).`},
  {id:"altA", g:"infra", label:"ALT A — 4 tracks at grade", type:"check", def:false, tip:`Trafikverket plan "Lund, fyra spår" [S7]: 2 new tracks Klostergården–Lund C–Stångby, platforms extended, demolitions at Armaturkurvan, curve unchanged. 5–7 bn (2020) [S5].`},
- {id:"altB", g:"infra", label:"ALT B — outer freight track", type:"check", def:false, tip:`Chord Teckomatorp/Kävlinge→Stångby; removes freight incl. DG from Lund C. +3–4 bn on top of at-grade (2020) [S5].`},
+ {id:"altB", g:"infra", label:"ALT B — outer freight track", type:"check", def:false, tip:`Diverts freight from Lund C. Two variants (select below): B1 upgrades the existing western route (Lommabanan + Kävlinge–Teckomatorp + Rååbanan via Marieholm + Eslöv–Stångby, 2–5 bn assumption, ≈ +39 km detour); B2 builds a new chord Kävlinge→Stångby north-west of Lund (≈ +10 km). Cost anchors: +3–4 bn add-on (2020 pre-study [S5]) vs 10–15 bn standalone (Lund Liberalerna 2026 [S22]) — expose both via the cost slider. A Teckomatorp-origin chord would be ≈ +27 km.`},
  {id:"altC", g:"infra", label:"ALT C — LD/HSR bypass + Lund Västra", type:"check", def:false, tip:`250 km/h double track west of centre; LD/HSR stop only at the outer station. Cost: no official estimate — model default 10–15 bn (${A}). Combines with everything: with Alt D on, LD use the bypass (no vertical-circulation penalty) while regional ride the tunnel — "D+C".`},
  {id:"altD", g:"infra", label:"ALT D — tunnel under Lund", type:"check", def:false, tip:`~6 km tubes + underground 6-track Lund C [S5]: fixes speed + capacity + barrier simultaneously, frees surface land. Costly and slow to build (Trafikverket 2026: 3–4× at-grade cost [S6][S17]) — but prior decisions are REVOCABLE: the model scores D purely on the cost/risk parameters you set here. Freight banned in long tunnels (Citytunneln practice [S16]) ⇒ Alt B couples ON automatically.`},
  {id:"cStop", g:"infra", label:"Alt C Lund service", type:"select", def:"stop", opts:[["stop","stop at Lund Västra"],["nostop","no-stop bypass (LD skips Lund)"]], tip:`Shinkansen-style: trains either stop at the outer station or skip Lund entirely (catchment loss = LD passengers must transfer to regional).`},
@@ -355,10 +385,11 @@ const PARAMS = [
  {id:"dVertPen", g:"infra", label:"Alt D vertical circulation penalty", min:0, max:4, step:0.25, def:1.5, unit:"min", tip:`Underground station access (TSI SRT evacuation routes) (${A}).`},
  // costs
  {id:"capexA", g:"costs", label:"Alt A — Lund section", min:3, max:12, step:0.25, def:6, unit:"bn SEK", tip:`5–7 bn (2020 pre-study) [S5] (${F} anchor, range editable).`},
- {id:"capexB", g:"costs", label:"Alt B — outer freight track", min:1.5, max:8, step:0.25, def:3.5, unit:"bn SEK", tip:`+3–4 bn on top of at-grade (2020) [S5] (${F} anchor).`},
+ {id:"capexB", g:"costs", label:"Alt B — outer freight track", min:1.5, max:15, step:0.25, def:3.5, unit:"bn SEK", tip:`Expose both anchors: B2 add-on +3–4 bn (2020 pre-study [S5]) or 10–15 bn standalone (Lund Liberalerna 2026 [S22]); B1 existing-corridor upgrade 2–5 bn (${A}). ${F} anchors, range editable.`},
  {id:"capexC", g:"costs", label:"Alt C — bypass + outer station", min:5, max:25, step:0.5, def:12.5, unit:"bn SEK", tip:`No official estimate — ${A} 10–15 bn, calibrated vs new-build alts 20–41 bn for ~35 km [S7].`},
  {id:"capexD", g:"costs", label:"Alt D — tunnel under Lund", min:12, max:30, step:0.5, def:20, unit:"bn SEK", tip:`18–22 bn (2020) [S5] (${F} anchor) before overrun premium.`},
  {id:"openYear", g:"costs", label:"Opening year, A/B/C", min:2030, max:2050, step:1, def:2040, unit:"", tip:`Government target ~2040 (ambition late 2030s) [S13] (${F}). Alt D opens this + its build delay.`},
+ {id:"accel2030s", g:"costs", label:"National-plan acceleration scenario", type:"check", def:false, tip:`April 2026 national plan (2026–2037, 1,171 bn SEK) front-loads Hässleholm–Lund; four tracks through Lund = the single most important Södra stambanan measure [S23]. When on, A/B/C open in 2037 instead of the base year; Alt D still opens later (+ build delay) and misses the Fehmarn-driven surge. Note Trafikverket's 2026 timetable pointed to 2043–2048 — the toggle brackets that uncertainty.`},
  // cba
  {id:"discRate", g:"cba", label:"Discount rate", min:1, max:6, step:0.25, def:3.5, unit:"%", tip:`Swedish official rate (${F}).`},
  {id:"horizon", g:"cba", label:"Horizon", min:20, max:60, step:5, def:40, unit:"yr", tip:`40–60 yr Swedish practice (${F}).`},
@@ -380,6 +411,7 @@ const PARAMS = [
  {id:"extCO2Val", g:"cba", label:"CO₂ value (swing)", min:0, max:0.5, step:0.05, def:0.05, unit:"bn/yr", tip:`${A} magnitude.`},
  {id:"extBarrier", g:"cba", label:"Include: barrier effects", type:"check", def:true, tip:`Alt A widens the surface barrier; Alt D frees land (${A}).`},
  {id:"extBarrierVal", g:"cba", label:"Barrier value (swing)", min:0, max:0.5, step:0.05, def:0.08, unit:"bn/yr", tip:`${A} magnitude.`},
+ {id:"extRefFr", g:"cba", label:"Freight/day for full externality value", min:30, max:240, step:5, def:130, unit:"trains/day", tip:`Reference freight volume at which the noise/safety "freight removed from centre" values are fully earned. Below it the benefit scales linearly (${A} — the 2045 forecast is 120–140/day [S4][S8]).`},
  {id:"deckOn", g:"cba", label:"Alt A decking / land value (+)", type:"check", def:false, tip:`Decking over the at-grade corridor ("Lund+") nets ~+2 bn [S5] — optional, default off (${F} anchor, optional toggle).`},
  {id:"deckVal", g:"cba", label:"Decking land value", min:0, max:4, step:0.25, def:2, unit:"bn", tip:`${F} anchor ~2 bn [S5].`},
  // sim
@@ -414,8 +446,9 @@ function centralSpeeds(f, P){
   const s = { reg: { south: c, north: 0.8 * P.lineSpeedPax },
               ld:  { south: c, north: 0.8 * P.lineSpeedPax },
               fr:  { south: c, north: P.lineSpeedFr } };
-  // the tunnel takes LD at 250; regional only rides the tunnel when there are no at-grade tracks (D alone)
-  if (f.D){ s.ld = { south: 250, north: 250 }; if (!f.A) s.reg = { south: 250, north: 250 }; }
+  // the tunnel takes LD at 250; regional rides it when there are no at-grade tracks (D alone) or when
+  // C sends LD to the bypass so the tunnel is left to regional (D+C, incl. D+C+A with surface tracks spare)
+  if (f.D){ s.ld = { south: 250, north: 250 }; if (!f.A || f.C) s.reg = { south: 250, north: 250 }; }
   return s;
 }
 /* track pairs per package: who shares tracks with whom, with which separation buffer */
@@ -429,8 +462,9 @@ function buildPairs(pkg, P){
       // LD/HSR on the 250 bypass, regional in the tunnel (still serves central Lund C)
       pairs.push({ id: "tunnel", buffer: P.headwaySeg, junc: 0.15, types: ["reg"], dwellExtra: P.dVertPen });
     } else {
-      pairs.push({ id: "tunnel", buffer: P.headwaySeg, junc: 0.15, types: ["reg", "ld"], dwellExtra: P.dVertPen });
-      if (f.A) pairs.push({ id: "surfPax", buffer: P.headwaySeg, junc, types: ["reg"] }); // A+D: LD tunnel, reg at grade
+      // A+D: LD in the tunnel, regional stays on the at-grade pair; D alone: all pax underground
+      pairs.push({ id: "tunnel", buffer: P.headwaySeg, junc: 0.15, types: f.A ? ["ld"] : ["reg", "ld"], dwellExtra: P.dVertPen });
+      if (f.A) pairs.push({ id: "surfPax", buffer: P.headwaySeg, junc, types: ["reg"] });
     }
   } else if (f.A){
     if (P.pairing === "pf"){
@@ -440,9 +474,6 @@ function buildPairs(pkg, P){
       pairs.push({ id: "fast", buffer: P.headwaySeg, junc, types: ["ld"] });
       pairs.push({ id: "slow", buffer: Math.max(1.5, P.headwayMixed - 0.2), junc: junc * 1.2, types: ["reg", "fr"] });
     }
-  } else if (f.D){
-    // tunnel alone: all pax underground @250, freight banned → chord (B forced)
-    pairs.push({ id: "pax", buffer: P.headwaySeg, junc, types: ["reg", "ld"], dwellExtra: P.dVertPen });
   } else {
     const types = ["reg", "ld", "fr"].filter(t => !((f.B) && t === "fr") && !(f.C && t === "ld"));
     pairs.push({ id: "mix", buffer: P.headwayMixed, junc, types });
@@ -472,12 +503,15 @@ function pairCapacity(pair, dem, sp, P){
 function capacityOf(pkg, P){
   const f = flagsOf(pkg), sp = centralSpeeds(f, P), dem = demandMap(pkg, P);
   const demCentral = dem.reg + (f.C ? 0 : dem.ld) + ((f.B || f.D) ? 0 : dem.fr);
-  let totCap = 0, capCentral = 0, totD = 0, worstUtil = 0, wp = null;
+  // utilisation is per track pair: the busiest central pair binds, not the sum of all pairs
+  let totCap = 0, capCentral = 0, capBinding = 0, totD = 0, worstCentral = 0, wp = null;
   for (const pr of buildPairs(pkg, P)){
     const r = pairCapacity(pr, dem, sp, P);
     totCap += r.cap; totD += r.D;
-    if (pr.id !== "bypass") capCentral += r.cap;
-    if (r.util > worstUtil){ worstUtil = r.util; wp = { pair: pr, r }; }
+    if (pr.id !== "bypass"){
+      capCentral += r.cap;
+      if (r.util > worstCentral){ worstCentral = r.util; capBinding = r.cap; wp = { pair: pr, r }; }
+    }
   }
   let binding = "headway (separation buffer)";
   if (wp && wp.r.D > 0){
@@ -485,9 +519,9 @@ function capacityOf(pkg, P){
     const wDwell = r.items.reduce((s, i) => s + i.d * P.dwellFactor * i.dwell, 0) / r.D;
     const wRun = r.items.reduce((s, i) => s + i.d * P.runFactor * i.rt, 0) / r.D;
     const comps = [["separation headway", pair.buffer], ["dwell at Lund C", wDwell], ["curve/section run time", wRun], ["junction conflicts", pair.junc]];
-    binding = worstUtil >= 1 ? "demand exceeds capacity" : comps.sort((a, b) => b[1] - a[1])[0][0];
+    binding = worstCentral >= 1 ? "demand exceeds capacity (" + pair.id + " pair)" : comps.sort((a, b) => b[1] - a[1])[0][0];
   }
-  return { cap: totCap, capCentral, util: totD > 0 ? totD / totCap : 0, utilCentral: capCentral > 0 ? demCentral / capCentral : 0, worstUtil, binding };
+  return { cap: totCap, capCentral, capBinding, demCentral, util: totD > 0 ? totD / totCap : 0, utilCentral: worstCentral, worstUtil: worstCentral, binding };
 }
 /* hourly timetable by greedy slot assignment (LD first, regional, freight in gaps) */
 function buildPattern(pkg, P){
@@ -544,8 +578,8 @@ function runMC(trains, P, runs){
 /* verdict on the CENTRAL corridor (bypass pairs excluded): capacity first, punctuality as collapse flag */
 function verdictOf(utilCentral, punct){
   if (utilCentral >= 1.0) return { v: "INFEASIBLE", c: "bad", why: "demand exceeds timetableable capacity" };
-  if (utilCentral >= 0.85) return { v: "FRAGILE", c: "warn", why: "overloaded — no recovery margin" };
   if (punct < 0.85) return { v: "INFEASIBLE", c: "bad", why: "timetable collapses in simulation (punctuality < 85%)" };
+  if (utilCentral >= 0.85) return { v: "FRAGILE", c: "warn", why: "overloaded — no recovery margin" };
   if (utilCentral >= 0.55) return { v: "FRAGILE", c: "warn", why: punct < 0.95 ? "loaded, and punctuality below the 95% target" : "loaded — little recovery margin" };
   if (punct < 0.95) return { v: "FEASIBLE", c: "ok", why: "capacity OK; punctuality below the 95% target" };
   return { v: "FEASIBLE", c: "ok", why: "capacity and punctuality within targets" };
@@ -577,7 +611,13 @@ function travelInfo(pkg, P, sims){
   }
   cphDoor = (f.C || f.D) ? ldDoor : d("ld") * 0.5;
   let frDoor;
-  if (f.B || f.D){ const frChord = (dist + P.chordLen) / P.chordSpeed * 60 + 0.3; frDoor = frVia - frChord; }
+  if (f.B || f.D){
+    const isB1 = P.bVariant === "b1";
+    const extraKm = isB1 ? B1_EXTRA_KM : P.chordLen;
+    const meetPen = isB1 ? P.bMeetPen : 0;
+    const frChord = (dist + extraKm) / P.chordSpeed * 60 + 0.3 + meetPen;
+    frDoor = frVia - frChord;
+  }
   else frDoor = d("fr");
   return { ldDoor, ldLineSaving, regDoor: d("reg"), cphDoor, frDoor, frVia, ldSpeed, ldSpeedBase, reloc };
 }
@@ -625,16 +665,20 @@ function cba(pkg, P, sims){
   // freight operating time on the chord (signed: can be negative when the chord is longer)
   let frBen = 0;
   if (f.B || f.D) frBen = trav.frDoor * frDay * P.frValue / 60 * 365;
-  // congestion relief: value of accommodating peak demand suppressed under do-nothing
-  const demT = P.tphReg + P.tphLD + P.tphFr;
-  const unmetDn = Math.max(0, demT - sims.dn.caps.capCentral);
-  const unmetPkg = Math.max(0, demT - sim.caps.capCentral);
+  // congestion relief: value of accommodating peak demand suppressed under do-nothing.
+  // Compare each package's CENTRAL demand against its central capacity — demand moved to the
+  // bypass/chord must not be counted against the central corridor.
+  const unmetDn = Math.max(0, sims.dn.caps.demCentral - sims.dn.caps.capCentral);
+  const unmetPkg = Math.max(0, sim.caps.demCentral - sim.caps.capCentral);
   const relief = Math.max(0, unmetDn - unmetPkg);
   const paxAvg = (regDay * P.paxLoadReg + ldDay * P.paxLoadLD) / Math.max(1, regDay + ldDay);
   const capBen = relief * P.dailyFactor * 2 * paxAvg * (P.avgTripMin / 60) * votW * 365 * 0.5;
   let ext = 0;
-  if (P.extNoise) ext += P.extNoiseVal * EXT.noise[pkg];
-  if (P.extSafety) ext += P.extSafetyVal * EXT.safety[pkg];
+  // freight-removal externalities (positive noise/safety for B/D) scale with the freight volume:
+  // no freight ⇒ nothing is removed and the benefit is zero
+  const frExtScale = P.extRefFr > 0 ? Math.min(1, frDay / P.extRefFr) : 1;
+  if (P.extNoise) ext += P.extNoiseVal * EXT.noise[pkg] * (EXT.noise[pkg] > 0 ? frExtScale : 1);
+  if (P.extSafety) ext += P.extSafetyVal * EXT.safety[pkg] * (EXT.safety[pkg] > 0 ? frExtScale : 1);
   if (P.extCO2) ext += P.extCO2Val * EXT.co2[pkg];
   if (P.extBarrier) ext += P.extBarrierVal * EXT.barrier[pkg];
   const ben0 = rel + timeBen + frBen + capBen + ext * BN;
@@ -644,7 +688,8 @@ function cba(pkg, P, sims){
   const capex = Math.max(0, capexOf(pkg, P) - (f.D ? P.dLandValue : 0)) * BN;
   const om = (f.D ? P.dOM : 0) * BN;
   const r = P.discRate / 100, g = P.growthPct / 100, baseY = 2026;
-  const open = P.openYear + (f.D ? P.dBuildDelay : 0);
+  const accel = P.accel2030s && !f.D;           // national-plan front-loading: at-grade options open earlier
+  const open = (accel ? Math.min(P.openYear, 2037) : P.openYear) + (f.D ? P.dBuildDelay : 0);
   const df = y => 1 / Math.pow(1 + r, y - baseY);
   let ann = 0; for (let t = open; t < open + P.horizon; t++) ann += Math.pow(1 + g, t - open) * df(t);
   let annFlat = 0; for (let t = open; t < open + P.horizon; t++) annFlat += df(t);
@@ -668,6 +713,17 @@ function computeAll(P, runs){
   for (const pkg of PKGS){ out[pkg].trav = travelInfo(pkg, P, out); }
   for (const pkg of PKGS){ out[pkg].cba = cba(pkg, P, out); }
   return out;
+}
+/* lightweight evaluator for one package + do-nothing (cba/travel need only those two) */
+function evaluatePkg(P, pkg, runs){
+  const out = {};
+  for (const p of ["dn", pkg]){
+    const sim = runMC(buildPattern(p, P), P, runs);
+    out[p] = { ...sim, caps: capacityOf(p, P) };
+  }
+  for (const p of ["dn", pkg]) out[p].trav = travelInfo(p, P, out);
+  for (const p of ["dn", pkg]) out[p].cba = cba(p, P, out);
+  return out[pkg];
 }
 /* break-even scan over a demand multiplier */
 function scanDemand(P, steps){
@@ -710,6 +766,37 @@ function scanDemand(P, steps){
   }
   return { grid, bcr, be, flips };
 }
+/* freight break-even: freight trains/day at which a B or D package's BCR crosses 1.
+   Freight volume scales both the daily total (frDaily) and the peak-hour paths (tphFr);
+   pax peaks and the capex stay fixed. */
+function freightBreakEven(P, pkg){
+  const f = flagsOf(pkg);
+  if (!(f.B || f.D)) return null;
+  const grid = [0, 0.25, 0.5, 0.75, 1, 1.5, 2, 3]; // multiplier on freight volume
+  let prev = null;
+  for (const m of grid){
+    const Pm = Object.assign({}, P, { frDaily: P.frDaily * m, tphFr: P.tphFr * m });
+    const b = evaluatePkg(Pm, pkg, Math.min(P.mcRuns, 50)).cba.bcr;
+    if (b >= 1){
+      const mm = prev ? prev.m + (1 - prev.b) * (m - prev.m) / (b - prev.b) : 0;
+      return { multiplier: mm, trainsPerDay: mm * P.frDaily };
+    }
+    prev = { m, b };
+  }
+  return null; // no break-even within 0–3× current freight volume
+}
+/* closure resilience: a tunnel closure blocks the whole corridor with NO diversion;
+   at-grade options keep one track in service or fall back to the classic pair (sketch KPI). */
+function closureResilience(P, pkg){
+  const f = flagsOf(pkg);
+  const days = f.D ? P.dClosureDays : 0;
+  const dailyTrains = (P.tphReg + P.tphLD + P.tphFr) * P.dailyFactor * 2;
+  const extraMinPerTrain = f.D ? 60 : (f.B && P.bVariant === "b1" ? 20 : 8); // no diversion vs single-track fallback
+  return { days, corridorBlocked: !!f.D, dailyTrains, extraMinPerTrain,
+           extraTrainHoursPerYear: days * dailyTrains * extraMinPerTrain / 60 };
+}
+/* raw-toggle guard: D without B would leave freight unsolved (the UI couples them, this flags stale/edited state) */
+function freightUnsolved(P){ return !!P.altD && !P.altB; }
 /* ============================================================
    UI — state, controls, rendering, animation
    ============================================================ */
@@ -719,14 +806,15 @@ function loadState(){
   try{
     const s = JSON.parse(localStorage.getItem(LSKEY));
     if (s && typeof s === "object") for (const k in d) if (typeof s[k] === typeof d[k]) d[k] = s[k];
+    if (d.altD) d.altB = true; // freight banned in tunnel ⇒ chord stays on
   }catch(e){}
   return d;
 }
 function saveState(){ try{ localStorage.setItem(LSKEY, JSON.stringify(S)); }catch(e){} }
 let S = loadState();
-let R = null, SCAN = null, TOR = null; // results cache
+let R = null, SCAN = null, TOR = null, FBE = null, CMP_FBE = {}; // results cache
 
-function selPkg(){ if (S.altD) return (S.altA ? "A" : "") + "D" + (S.altC ? "C" : ""); const c = (S.altA ? "A" : "") + (S.altB ? "B" : "") + (S.altC ? "C" : ""); return c || "dn"; }
+function selPkg(){ if (S.altD) return (S.altA ? "A" : "") + "D" + (S.altC ? "C" : "B"); const c = (S.altA ? "A" : "") + (S.altB ? "B" : "") + (S.altC ? "C" : ""); return c || "dn"; }
 const fmtBn = x => (x / 1e9).toFixed(1);
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
@@ -764,7 +852,7 @@ function buildControls(){
       if (p.type === "check") S[p.id] = el.checked;
       else if (p.type === "select") S[p.id] = el.value;
       else S[p.id] = parseFloat(el.value);
-      if (p.id === "altD" && S.altD && !S.altB){ S.altB = true; $("c_altB").checked = true; } // freight banned in tunnel ⇒ chord on
+      if (S.altD && !S.altB){ S.altB = true; $("c_altB").checked = true; } // freight banned in tunnel ⇒ chord stays on
       syncLabels(); saveState(); markPreset(); scheduleRecompute();
     });
   }
@@ -801,6 +889,13 @@ function recompute(){
   SCAN = scanDemand(S, 0.15);
   const tpkg = selPkg();
   TOR = { pkg: tpkg === "dn" ? "A" : tpkg, ...tornadoFor(S, tpkg === "dn" ? "A" : tpkg) };
+  CMP_FBE = {}; FBE = null;
+  for (const p of PKGS){
+    if (!(flagsOf(p).B || flagsOf(p).D)) continue;
+    const r = freightBreakEven(S, p);
+    CMP_FBE[p] = r ? r.trainsPerDay : null;
+  }
+  if (tpkg in CMP_FBE) FBE = CMP_FBE[tpkg];
   renderAll();
   const dt = performance.now() - t0;
   if (dt > 2900) console.warn("recompute slow:", dt);
@@ -820,6 +915,12 @@ function tornadoFor(P, pkg){
     ["Demand growth ±1 pt", s => { s.growthPct += 1; }, s => { s.growthPct -= 1; }],
     ["VoT ±30%", s => { s.votB *= 1.3; s.votC *= 1.3; s.votL *= 1.3; }, s => { s.votB *= .7; s.votC *= .7; s.votL *= .7; }]
   ];
+  const f = flagsOf(pkg);
+  if (f.B || f.D){
+    defs.push(["Alt B variant: B1 / B2", s => { s.bVariant = "b1"; }, s => { s.bVariant = "b2"; }]);
+    if (f.D) defs.push(["Land value 0 / 2 bn", s => { s.dLandValue = 0; }, s => { s.dLandValue = 2; }]);
+    defs.push(["Overrun 0% / 100%", s => { s.dOverrun = 0; }, s => { s.dOverrun = 100; }]);
+  }
   return { base, rows: defs.map(([label, hi, lo]) => {
     const Ph = Object.assign({}, P); hi(Ph);
     const Pl = Object.assign({}, P); lo(Pl);
@@ -843,14 +944,23 @@ function renderAnswer(){
     ? `Raising the curve to ${S.curveSpeed} km/h moves 2-track capacity by only <b>${(100 * (capX - cap80) / cap80).toFixed(1)}%</b> — the section is headway-bound, not curve-bound. Speed needs realignment or Alt C; capacity needs Alt A or B.`
     : `The curve (80 km/h) costs speed but almost no capacity: raising it to 140 km/h would add only ≈3%. <b>4 tracks = capacity, not speed.</b>`;
   const cLine = (S.altC || sel === "C" || sel === "AC" || sel === "BC" || sel === "ABC")
-    ? `<p>Under Alt C, LD speed through the corridor rises to <b>${R[sel].trav.ldSpeed.toFixed(0)} km/h</b>, but the <b>central 2 tracks stay at ${(R[sel].caps.utilCentral * 100).toFixed(0)}% utilisation (${vd[sel].v})</b> — C buys speed, not central capacity.</p>` : "";
+    ? `<p>Under Alt C, LD speed through the corridor rises to <b>${R[sel].trav.ldSpeed.toFixed(0)} km/h</b>, but the <b>central corridor stays at ${(R[sel].caps.utilCentral * 100).toFixed(0)}% utilisation on its busiest pair (${vd[sel].v})</b> — C buys speed, not central capacity.</p>` : "";
+  const fSel = flagsOf(sel);
+  const frLine = (fSel.B || fSel.D) ? (() => {
+    const isB1 = S.bVariant === "b1";
+    const extraKm = isB1 ? B1_EXTRA_KM : S.chordLen;
+    const extraMin = extraKm / S.chordSpeed * 60 + (isB1 ? S.bMeetPen : 0);
+    return `<p><b>Freight detour (${isB1 ? "B1 — existing Rååbanan route" : "B2 — new chord"}):</b> +${extraKm.toFixed(1)} km ≈ +${extraMin.toFixed(0)} min/train vs via Lund C${isB1 ? " (incl. " + S.bMeetPen + " min single-track meet penalty)" : ""}, traded against centre externality gains of ${(R[sel].cba.ext / 1e9).toFixed(2)} bn/yr.</p>`;
+  })() : "";
+  const fUnsolved = freightUnsolved(S)
+    ? `<p style="color:var(--bad)"><b>Freight unsolved:</b> Alt D is on but Alt B is off — long trains/DG would still pass through central Lund. The UI couples D⇒B; this flags a stale or hand-edited state.</p>` : "";
   const beChips = PKGS.filter(p => p !== "dn").map(p =>
-    `<span class="chip" style="background:${PKG_COLOR[p]}" title="${PKG_NAME[p]}">${p === "DB" ? "D+B" : p}: ${SCAN.be[p] ? SCAN.be[p].toFixed(1) + " tph" : "&gt;3×"}</span>`).join(" ");
+    `<span class="chip" style="background:${PKG_COLOR[p]}" title="${PKG_NAME[p]}">${pkgLabel(p)}: ${SCAN.be[p] ? SCAN.be[p].toFixed(1) + " tph" : "&gt;3×"}</span>`).join(" ");
   const flipTxt = SCAN.flips.length > 1
     ? `Ranking flips as demand grows: ${SCAN.flips.slice(0, 5).map(f => `<b>${f.tph.toFixed(1)} tph/dir</b> → ${PKG_NAME[f.pkg].split("—")[0].trim()}`).join(" · ")}${SCAN.flips.length > 5 ? " · …" : ""}`
     : `No ranking flip within the scanned demand range (0.2–3×).`;
   const winHtml = winner
-    ? `<h2><span class="chip" style="background:${PKG_COLOR[winner]}">${winner === "DB" ? "D+B" : winner}</span> ${PKG_NAME[winner].split("—")[1]?.trim() || ""} wins at ${demT.toFixed(1)} tph/dir — NPV <span class="pos">+${fmtBn(R[winner].cba.npv)} bn</span>, BCR ${R[winner].cba.bcr.toFixed(2)}</h2>`
+    ? `<h2><span class="chip" style="background:${PKG_COLOR[winner]}">${pkgLabel(winner)}</span> ${PKG_NAME[winner].split("—")[1]?.trim() || ""} wins at ${demT.toFixed(1)} tph/dir — NPV <span class="pos">+${fmtBn(R[winner].cba.npv)} bn</span>, BCR ${R[winner].cba.bcr.toFixed(2)}</h2>`
     : `<h2>At ${demT.toFixed(1)} tph/dir no package clears BCR 1.0 on its own merits — <b>do nothing / defer</b> is the economic answer (or revisit the externality values you set).</h2>`;
   const drv = winner ? (() => {
     const c = R[winner].cba;
@@ -859,11 +969,13 @@ function renderAnswer(){
     return parts ? `Main benefit drivers: ${parts}.` : "";
   })() : "";
   $("answerCard").innerHTML = `
-    <div class="aTitle">Answer — for the current settings (peak ${demT.toFixed(1)} tph/dir · ${S.frDaily} freight/day · CAPEX A ${S.capexA} / B ${S.capexB} / C ${S.capexC} / D ${S.capexD} bn)</div>
+    <div class="aTitle">Answer — for the current settings (peak ${demT.toFixed(1)} tph/dir · ${S.frDaily} freight/day · B variant ${S.bVariant.toUpperCase()} · CAPEX A ${S.capexA} / B ${S.capexB} / C ${S.capexC} / D ${S.capexD} bn)</div>
     ${winHtml}
     <p>${drv} ${winner ? `Feasibility: <b class="${vd[winner].c === "ok" ? "pos" : "neg"}">${vd[winner].v}</b> (${vd[winner].why}).` : ""}
     Best BCR: <b>${PKG_NAME[bestBcr]}</b> at ${isFinite(R[bestBcr].cba.bcr) ? R[bestBcr].cba.bcr.toFixed(2) : "∞"}.</p>
+    ${fUnsolved}
     ${cLine}
+    ${frLine}
     <p>${curveNote}</p>
     <div class="flip"><b>Break-even demand (BCR = 1.0)</b>: ${beChips}<br>${flipTxt}</div>`;
 }
@@ -873,14 +985,17 @@ function renderKPIs(){
   const vd = verdictOf(o.caps.utilCentral, o.punct);
   const card = (t, v, s, cls) => `<div class="kpi ${cls || ""}"><div class="t">${t}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
   $("kpiRow").innerHTML =
-    card("Selected package", `<span class="chip" style="background:${PKG_COLOR[sel]}">${sel === "DB" ? "D+B" : sel}</span>`, PKG_NAME[sel].split("—")[1]?.trim().slice(0, 34) || "baseline") +
-    card("Central utilisation", (o.caps.utilCentral * 100).toFixed(0) + "%", `do-nothing ${(dn.caps.utilCentral * 100).toFixed(0)}% · cap ${o.caps.capCentral.toFixed(1)} tph/dir`, o.caps.utilCentral >= 1 ? "bad" : o.caps.utilCentral >= 0.55 ? "warn" : "ok") +
+    card("Selected package", `<span class="chip" style="background:${PKG_COLOR[sel]}">${pkgLabel(sel)}</span>`, PKG_NAME[sel].split("—")[1]?.trim().slice(0, 34) || "baseline") +
+    card("Central utilisation", (o.caps.utilCentral * 100).toFixed(0) + "%", `do-nothing ${(dn.caps.utilCentral * 100).toFixed(0)}% · busiest pair cap ${o.caps.capBinding.toFixed(1)} tph/dir`, o.caps.utilCentral >= 1 ? "bad" : o.caps.utilCentral >= 0.55 ? "warn" : "ok") +
     card("Timetable verdict", vd.v, vd.why, vd.c) +
     card("p95 total delay (reg)", o.reg.p95.toFixed(1) + " min", `do-nothing ${dn.reg.p95.toFixed(1)} min`, o.reg.p95 > 10 ? "bad" : o.reg.p95 > 5 ? "warn" : "ok") +
     card("Punctuality ≤5 min", (o.punct * 100).toFixed(1) + "%", `do-nothing ${(dn.punct * 100).toFixed(1)}%`, o.punct < 0.85 ? "bad" : o.punct < 0.95 ? "warn" : "ok") +
     card("LD speed via corridor", o.trav.ldSpeed.toFixed(0) + " km/h", sel.includes("A") && !sel.includes("C") && !sel.includes("D") ? "unchanged by A — capacity, not speed" : `do-nothing ${dn.trav.ldSpeed.toFixed(0)} km/h`) +
     card("NPV (40 y, 3.5%)", (o.cba.npv >= 0 ? "+" : "") + fmtBn(o.cba.npv) + " bn", `opens ${o.cba.open}${flagsOf(sel).D ? " · " + S.dClosureDays + " closure d/yr (no diversion)" : ""}`, o.cba.npv < 0 ? "bad" : "ok") +
-    card("BCR", isFinite(o.cba.bcr) ? o.cba.bcr.toFixed(2) : "—", SCAN && SCAN.be[sel] ? `break-even ${SCAN.be[sel].toFixed(1)} tph/dir (now ${(S.tphReg + S.tphLD + S.tphFr).toFixed(1)})` : "no break-even ≤3× demand", o.cba.bcr < 1 ? "warn" : "ok");
+    card("BCR", isFinite(o.cba.bcr) ? o.cba.bcr.toFixed(2) : "—", FBE != null ? `freight break-even ${FBE.toFixed(0)} trains/day (now ${S.frDaily})` : (SCAN && SCAN.be[sel] ? `break-even ${SCAN.be[sel].toFixed(1)} tph/dir (now ${(S.tphReg + S.tphLD + S.tphFr).toFixed(1)})` : "no break-even ≤3× demand"), o.cba.bcr < 1 ? "warn" : "ok") +
+    (flagsOf(sel).D ? (() => { const cr = closureResilience(S, sel); return card("Closure resilience", "none — no diversion", cr.days + " d/yr corridor blocked · ≈" + (cr.extraTrainHoursPerYear / 1000).toFixed(0) + "k train-h/yr", "bad"); })()
+      : flagsOf(sel).B ? (() => { const cr = closureResilience(S, sel); return card("Closure resilience", "partial", "one track / classic pair can keep running (≈" + cr.extraMinPerTrain + " min/train on failure days)", "warn"); })()
+      : "");
 }
 
 /* ---------- charts ---------- */
@@ -1012,7 +1127,7 @@ function renderRadar(){
   let lx = 8;
   for (const pkg of PKGS){
     if (![sel, feas, "dn"].includes(pkg)) continue;
-    s += `<rect x="${lx}" y="${H - 10}" width="8" height="8" fill="${PKG_COLOR[pkg]}"/><text x="${lx + 11}" y="${H - 2}" font-size="9.5" fill="#57616d">${pkg === "dn" ? "do-nothing" : pkg}</text>`;
+    s += `<rect x="${lx}" y="${H - 10}" width="8" height="8" fill="${PKG_COLOR[pkg]}"/><text x="${lx + 11}" y="${H - 2}" font-size="9.5" fill="#57616d">${pkg === "dn" ? "do-nothing" : pkgLabel(pkg)}</text>`;
     lx += 60 + pkg.length * 4;
   }
   svgEl("radar").setAttribute("viewBox", `0 0 ${W} ${H}`);
@@ -1020,8 +1135,8 @@ function renderRadar(){
 }
 function renderCmpTable(){
   const rows = [
-    ["Central capacity (tph/dir)", p => R[p].caps.capCentral.toFixed(1)],
-    ["Central utilisation", p => (R[p].caps.utilCentral * 100).toFixed(0) + "%"],
+    ["Central capacity, summed pairs (tph/dir)", p => R[p].caps.capCentral.toFixed(1)],
+    ["Central utilisation (busiest pair)", p => (R[p].caps.utilCentral * 100).toFixed(0) + "%"],
     ["Timetable verdict", p => { const v = verdictOf(R[p].caps.utilCentral, R[p].punct); return `<span class="${v.c === "ok" ? "vF" : v.c === "warn" ? "vFg" : "vI"}">${v.v}</span>`; }],
     ["Binding constraint", p => R[p].caps.binding],
     ["p95 delay, regional (min)", p => R[p].reg.p95.toFixed(1)],
@@ -1030,15 +1145,17 @@ function renderCmpTable(){
     ["Lund↔Stockholm Δ (min)", p => (R[p].trav.ldDoor >= 0 ? "+" : "") + R[p].trav.ldDoor.toFixed(1)],
     ["Lund↔Copenhagen Δ (min)", p => (R[p].trav.cphDoor >= 0 ? "+" : "") + R[p].trav.cphDoor.toFixed(1)],
     ["Freight through centre (trains/day)", p => (flagsOf(p).B || flagsOf(p).D) ? "0" : String(S.frDaily)],
+    ["Freight break-even (trains/day)", p => { const b = CMP_FBE[p]; return b == null ? "—" : b.toFixed(0); }],
+    ["Closure resilience", p => { const c = closureResilience(S, p); return c.corridorBlocked ? `blocked — no diversion (${c.days} d/yr)` : "partial (one track / classic pair)"; }],
     ["Break-even demand (tph/dir)", p => SCAN.be[p] ? SCAN.be[p].toFixed(1) : ">3×"],
     ["CAPEX (bn SEK)", p => R[p].cba.capex > 0 ? (R[p].cba.capex / 1e9).toFixed(1) : "0"],
     ["NPV (bn SEK)", p => `<span class="${R[p].cba.npv >= 0 ? "pos" : "neg"}">${(R[p].cba.npv >= 0 ? "+" : "") + fmtBn(R[p].cba.npv)}</span>`],
     ["BCR", p => isFinite(R[p].cba.bcr) ? R[p].cba.bcr.toFixed(2) : "—"],
     ["SEK per saved delay-min", p => isFinite(R[p].cba.costPerMin) ? Math.round(R[p].cba.costPerMin).toLocaleString("sv-SE") : "—"],
-    ["Land take / demolitions", p => ({ dn: "none", A: "high at curve", B: "greenfield", C: "greenfield", AB: "high at curve", AC: "high at curve", BC: "greenfield", ABC: "high at curve", DB: "none (freed land)", ADB: "high + tunnel sites" }[p])],
-    ["Noise in centre", p => ({ dn: "status quo", A: "worse", B: "much better", C: "better", AB: "much better", AC: "better", BC: "much better", ABC: "much better", DB: "best (silent)", ADB: "best (LD underground)" }[p])]
+    ["Land take / demolitions", p => ({ dn: "none", A: "high at curve", B: "greenfield", C: "greenfield", AB: "high at curve", AC: "high at curve", BC: "greenfield", ABC: "high at curve", DB: "none (freed land)", DC: "greenfield + freed land", ADB: "high + tunnel sites", ADC: "high + tunnel sites" }[p] ?? "—")],
+    ["Noise in centre", p => ({ dn: "status quo", A: "worse", B: "much better", C: "better", AB: "much better", AC: "better", BC: "much better", ABC: "much better", DB: "best (silent)", DC: "best (silent)", ADB: "better (LD underground)", ADC: "best (silent)" }[p] ?? "—")]
   ];
-  let h = "<thead><tr><th>Metric</th>" + PKGS.map(p => `<th style="color:${PKG_COLOR[p]}">${p === "dn" ? "0" : p}${p === selPkg() ? " ◄" : ""}</th>`).join("") + "</tr></thead><tbody>";
+  let h = "<thead><tr><th>Metric</th>" + PKGS.map(p => `<th style="color:${PKG_COLOR[p]}">${p === "dn" ? "0" : pkgLabel(p)}${p === selPkg() ? " ◄" : ""}</th>`).join("") + "</tr></thead><tbody>";
   for (const [label, fn] of rows){
     h += `<tr><td>${label}</td>${PKGS.map(p => `<td class="num">${fn(p)}</td>`).join("")}</tr>`;
   }
@@ -1064,7 +1181,7 @@ function pathFrac(pathId, tx, ty){
 function buildStreams(){
   const f = { A: S.altA, B: S.altB || S.altD, C: S.altC, D: S.altD };
   const st = [];
-  const centre = { reg: !f.D || f.A, ld: !f.C && !f.D };
+  const centre = { reg: !(f.D && (!f.A || f.C)), ld: !f.C && !f.D };
   const frSthShare = Math.max(0, S.frDaily - S.frGbgDaily) / Math.max(1, S.frDaily);
   const mk = (name, routeN, routeS, type, ratePerDir, share, v, dwellFrac) => {
     if (ratePerDir * share <= 0.05) return;
@@ -1072,12 +1189,13 @@ function buildStreams(){
       st.push({ name, pathId: dir === 1 ? routeN : routeS, dir, type, rate: ratePerDir * share, v, dwellFrac, next: ANIM.clockMin + Math.random() * 30 });
     }
   };
-  // passenger regional: majority to Stockholm (NE), rest to Helsingborg/Gbg (NW)
-  mk("reg→Sth", "rPaxSth", "rPaxSth", "reg", S.tphReg, 0.6, 130, centre.reg ? 0.47 : null);
-  mk("reg→Gbg", "rPaxGbg", "rPaxGbg", "reg", S.tphReg, 0.4, 130, centre.reg ? 0.47 : null);
+  // passenger regional: majority to Stockholm (NE), rest to Helsingborg/Gbg (NW); via tunnel when D routes them underground
+  const regRoute = centre.reg ? null : "rTunnel";
+  mk("reg→Sth", regRoute || "rPaxSth", regRoute || "rPaxSth", "reg", S.tphReg, 0.6, 130, centre.reg ? 0.47 : null);
+  mk("reg→Gbg", regRoute || "rPaxGbg", regRoute || "rPaxGbg", "reg", S.tphReg, 0.4, 130, centre.reg ? 0.47 : null);
   // long-distance
   const ldRoute = f.C ? "rLdBypass" : f.D ? "rTunnel" : "rPaxSth";
-  const ldDwell = f.C ? 0.5 : centre.ld ? 0.47 : null;
+  const ldDwell = f.C ? 0.5 : (f.D || centre.ld) ? 0.47 : null;
   mk("ld→Sth", ldRoute, ldRoute, "ld", S.tphLD, f.C || f.D ? 1 : 0.75, f.C || f.D ? 230 : 160, ldDwell);
   if (!f.C && !f.D) mk("ld→Gbg", "rPaxGbg", "rPaxGbg", "ld", S.tphLD, 0.25, 160, centre.ld ? 0.47 : null);
   // freight Stockholm-bound
@@ -1132,8 +1250,14 @@ function animTick(now){
         }
       }
       if (t.pos > t.L + 6 || t.pos < -6){ t.el.remove(); ANIM.trains.splice(i, 1); continue; }
-      const pt = $(t.s.pathId).getPointAtLength(Math.max(0, Math.min(t.L, t.pos)));
-      t.el.setAttribute("cx", pt.x); t.el.setAttribute("cy", pt.y);
+      const el = $(t.s.pathId);
+      const pt = el.getPointAtLength(Math.max(0, Math.min(t.L, t.pos)));
+      // opposing trains pass side by side: offset each direction to its own left of the centreline
+      const q1 = el.getPointAtLength(Math.max(0, Math.min(t.L, t.pos - 1.5)));
+      const q2 = el.getPointAtLength(Math.max(0, Math.min(t.L, t.pos + 1.5)));
+      const dx = q2.x - q1.x, dy = q2.y - q1.y, dl = Math.hypot(dx, dy) || 1;
+      const off = 3 * t.s.dir;
+      t.el.setAttribute("cx", pt.x - dy / dl * off); t.el.setAttribute("cy", pt.y + dx / dl * off);
     }
     const hh = Math.floor(hFloat), mm = Math.floor((hFloat - hh) * 60);
     $("simClock").textContent = `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;

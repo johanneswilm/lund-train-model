@@ -193,11 +193,15 @@ if (r1) {
     if (r < rMin) { rMin = r; atKm = ((total * i) / N) / 1000; }
   }
   const rEff = Math.max(rMin, 1);
-  const vImplied = 3.92 * Math.sqrt(rEff); // km/h at ~120 mm cant equilibrium
-  console.log(`Klostergården->LundC path: ${(total / 1000).toFixed(2)} km, min curve radius ≈ ${rEff.toFixed(0)} m at ${atKm.toFixed(1)} km from Klostergården; implied cant-equilibrium speed ≈ ${vImplied.toFixed(0)} km/h`);
+  // cant equilibrium: h[mm] = 11.8 v^2 / R  ->  v = sqrt(h*R/11.8)
+  const vEq160 = Math.sqrt(160 * rEff / 11.8);       // equilibrium at the max cant usually applied (160 mm)
+  const vMax = Math.sqrt((160 + 100) * rEff / 11.8); // 160 mm cant + 100 mm cant deficiency (~0.65 m/s^2)
+  console.log(`Klostergården->LundC path: ${(total / 1000).toFixed(2)} km, min curve radius ≈ ${rEff.toFixed(0)} m at ${atKm.toFixed(1)} km from Klostergården`);
+  console.log(`  speed band: ${vEq160.toFixed(0)} km/h at 160 mm equilibrium cant; ${vMax.toFixed(0)} km/h with 160+100 mm cant/cant deficiency`);
   out.curveMinRadiusM = +rEff.toFixed(0);
   out.curveAtKm = +atKm.toFixed(2);
-  out.curveImpliedSpeed = +vImplied.toFixed(0);
+  out.curveEqSpeed160mm = +vEq160.toFixed(0);
+  out.curveMaxSpeedCantDef = +vMax.toFixed(0);
   out.klosterLundPathKm = +(total / 1000).toFixed(2);
 }
 fs.writeFileSync("osm/measured.json", JSON.stringify(out, null, 1));

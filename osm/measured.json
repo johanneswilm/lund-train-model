@@ -17,6 +17,7 @@
  "KlostergårdenStangbyStraight": 6.37,
  "curveMinRadiusM": 334,
  "curveAtKm": 1.19,
- "curveImpliedSpeed": 72,
+ "curveEqSpeed160mm": 67,
+ "curveMaxSpeedCantDef": 86,
  "klosterLundPathKm": 1.65
 }
