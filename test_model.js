@@ -307,6 +307,13 @@ test("Södra stambanan and the Alt B freight path both run through Stångby", ()
   assert.ok(/258\s+300/.test(b1) && /700\s+300/.test(b1),
     "the B1 route must run Kävlinge→Teckomatorp→Marieholm→Eslöv before joining at Stångby");
   assert.ok(/id="gB1Path"/.test(html), "the B1 Rååbanan segment must be drawn on the schematic");
+  const bypassAnim = pathOf("rLdBypass");
+  const bypassStatic = html.match(/<g id="gC"[^>]*>[\s\S]*?<path d="([^"]+)"/)[1];
+  assert.ok(!/497\s+447/.test(bypassAnim) && !/497\s+447/.test(bypassStatic),
+    "the LD/HSR bypass must not touch the Lund C junction — it stops only at Lund Västra and rejoins at Stångby");
+  for (const seg of ["C 385 585, 345 545, 342 500", "C 340 445, 365 400, 420 380", "C 490 357, 570 340, 630 335"])
+    assert.ok(bypassAnim.includes(seg) && bypassStatic.includes(seg),
+      `static and animated Alt C must share the same western arc (${seg})`);
   assert.ok(!/id="gMeets"/.test(html), "no meet-point label layer (labels/symbols not wanted)");
 });
 
