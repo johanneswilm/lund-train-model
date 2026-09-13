@@ -37,7 +37,7 @@ function model() {
                flagsOf, demandMap, centralSpeeds, buildPairs, occOf, pairCapacity, capacityOf,
                buildPattern, runMC, verdictOf, travelInfo, capexOf, cba, selPkg,
                freightBreakEven, closureResilience, freightUnsolved, evaluatePkg, tornadoFor,
-               B1_EXTRA_KM, capexIdsOf,
+               B1_EXTRA_KM, capexIdsOf, freightDetour, NOISE_FR, frProfileW, frWbar, frDailySpawns,
                setState: (k, v) => { S[k] = v; }, getState: () => Object.assign({}, S) };`)();
   return cachedModel;
 }
@@ -291,7 +291,7 @@ test("Södra stambanan and the Alt B freight path both run through Stångby", ()
     return m[1];
   };
   const sharedTail = "C 677 308, 720 285, 763 259";
-  for (const id of ["rPaxSth", "rFrSth", "rFrChord"]) {
+  for (const id of ["rPaxSth", "rFrSth", "rFrChord", "rFrB1", "rLdBypass", "rTunnel"]) {
     const d = pathOf(id);
     assert.ok(d.includes("630 335"), `${id} must run through Stångby (630,335)`);
     assert.ok(d.includes(sharedTail), `${id} must share the Stångby→Eslöv alignment`);
@@ -303,6 +303,10 @@ test("Södra stambanan and the Alt B freight path both run through Stångby", ()
   assert.ok(!/656\s+388/.test(chord), "the old north-loop endpoint must be gone");
   assert.ok(chord.includes("C 350 255, 470 215, 630 335"),
     "static and animated chord must share the same Kävlinge→Stångby arc");
+  const b1 = pathOf("rFrB1");
+  assert.ok(/258\s+300/.test(b1) && /700\s+300/.test(b1),
+    "the B1 route must run Kävlinge→Teckomatorp→Marieholm→Eslöv before joining at Stångby");
+  assert.ok(/id="gB1Path"/.test(html), "the B1 Rååbanan segment must be drawn on the schematic");
   assert.ok(!/id="gMeets"/.test(html), "no meet-point label layer (labels/symbols not wanted)");
 });
 
@@ -460,4 +464,113 @@ test("break-even scan returns numeric thresholds and monotone ranking flips", ()
   for (let i = 1; i < scan.flips.length; i++) {
     assert.ok(scan.flips[i].tph > scan.flips[i - 1].tph, "flips must advance with demand");
   }
+});
+
+
+/* ------------------------------------------------------------------ */
+test("measured.json: B1 legs reproduce the +38.8 km detour; unreachable routes are null", () => {
+  const m = model();
+  const meas = JSON.parse(fs.readFileSync(path.join(__dirname, "osm", "measured.json"), "utf8"));
+  const b1 = meas["Malmo->Teckomatorp(via Kavlinge)"] + meas["Teckomatorp->Eslov"] + meas["Eslov->Stangby"];
+  const via = meas["Malmo->LundC"] + meas["LundC->Stangby"];
+  assert.ok(Math.abs(via - meas["Malmo->Stangby(via Lund)"]) < 0.2,
+    `via-Lund total ${via} must match the direct measurement ${meas["Malmo->Stangby(via Lund)"]}`);
+  assert.ok(Math.abs((b1 - via) - m.B1_EXTRA_KM) < 0.3,
+    `B1 detour ${(b1 - via).toFixed(1)} km must equal B1_EXTRA_KM ${m.B1_EXTRA_KM}`);
+  for (const k of ["LundC->Stockholm", "LundC->Alvesta", "LundC->Hassleholm", "LundC->Helsingborg"])
+    assert.equal(meas[k], null, `${k} is beyond the corridor extract and must be null, not a truncated distance`);
+});
+
+test("empty track pairs contribute zero capacity (no phantom design capacity)", () => {
+  const m = model();
+  const P = P2026(m);
+  const frPair = m.buildPairs("AB", P).find(pr => pr.id === "fr"); // freight is on the chord: pair empty
+  const dem = m.demandMap("AB", P), sp = m.centralSpeeds(m.flagsOf("AB"), P);
+  assert.equal(m.pairCapacity(frPair, dem, sp, P).cap, 0, "an empty pair must report 0 tph, not the design figure");
+  assert.ok(m.capacityOf("AB", P).capCentral < m.capacityOf("A", P).capCentral,
+    "A+B's summed central capacity must exclude the empty freight pair");
+});
+
+test("freight detour formula is shared by the travel module (and hence the answer card)", () => {
+  const m = model();
+  const P = scenario(m, { altB: true });
+  const det = m.freightDetour(P);
+  assert.ok(det.netMin > 0 && det.chordMin > det.viaMin, "the chord must cost net minutes vs via Lund C");
+  reseed(61);
+  const out = m.computeAll(P, 40);
+  assert.ok(Math.abs(out.B.trav.frDoor - (out.dn.fr.mean - det.netMin)) < 1e-9,
+    `frDoor ${out.B.trav.frDoor.toFixed(2)} must equal delay relief minus net detour ${det.netMin.toFixed(2)}`);
+  const det1 = m.freightDetour(scenario(m, { bVariant: "b1" }));
+  assert.ok(det1.extraKm === m.B1_EXTRA_KM && det1.netMin > det.netMin,
+    "B1 must use the measured existing-route detour and be slower than B2");
+});
+
+test("noise externality: freight-driven share scales with freight volume, pax share does not", () => {
+  const m = model();
+  const zeroFr = { frDaily: 0, tphFr: 0 };
+  const bExt = m.evaluatePkg(scenario(m, { altB: true, ...zeroFr }), "B", 30).cba.ext;
+  assert.ok(Math.abs(bExt) < 1e6, "B's noise+safety benefit must vanish without freight");
+  const cZero = m.evaluatePkg(scenario(m, { altC: true, ...zeroFr }), "C", 30).cba.ext;
+  const cFull = m.evaluatePkg(scenario(m, { altC: true, frDaily: 130 }), "C", 30).cba.ext;
+  assert.ok(cZero > 0 && Math.abs(cZero - cFull) < 1e6,
+    `C's externality is pax-driven and must not depend on freight volume (${cZero} vs ${cFull})`);
+  const dbZero = m.evaluatePkg(scenario(m, { altD: true, altB: true, ...zeroFr }), "DB", 30).cba.ext;
+  const dbFull = m.evaluatePkg(scenario(m, { altD: true, altB: true, frDaily: 130 }), "DB", 30).cba.ext;
+  assert.ok(dbZero > 0 && dbFull > dbZero, "the tunnel keeps its pax noise benefit but loses the freight share");
+});
+
+test("tunnel closure cost is monetised blocked train-hours and scales with closure days", () => {
+  const m = model();
+  const at = d => m.evaluatePkg(scenario(m, { altD: true, altB: true, dClosureDays: d }), "DB", 30).cba.closure;
+  const c0 = at(0), c3 = at(3), c6 = at(6);
+  assert.equal(c0, 0, "no closure days, no closure cost");
+  assert.ok(c3 > 0, "closure days must cost blocked train-hours even when other benefits are small");
+  assert.ok(Math.abs(c6 - 2 * c3) < 1e-9 * c3 + 1e-9, "closure cost must scale linearly with closure days");
+});
+
+test("regional rides the tunnel at 250 km/h with only a small net run-time saving", () => {
+  const m = model();
+  reseed(67);
+  const out = m.computeAll(scenario(m, { altD: true, altB: true }), 30);
+  assert.ok(out.DB.trav.regLineSaving !== 0, "D without A must credit regional tunnel run time");
+  assert.ok(Math.abs(out.DB.trav.regLineSaving) < 1,
+    `the saving is small — vertical circulation eats the short-corridor gain (got ${out.DB.trav.regLineSaving})`);
+  const outADB = m.computeAll(scenario(m, { altA: true, altD: true, altB: true }), 30);
+  assert.equal(outADB.ADB.trav.regLineSaving, 0, "A+D keeps regional at grade: no tunnel saving");
+});
+
+test("freight animation profile preserves the daily totals (and zero demand spawns nothing)", () => {
+  const m = model();
+  for (const conc of [0, 60, 100]) {
+    assert.ok(Math.abs(m.frDailySpawns(17.5, conc) - 17.5) < 1e-9,
+      "per-direction daily spawns must equal the input, whatever the night concentration");
+    assert.equal(m.frDailySpawns(0, conc), 0, "zero freight must spawn zero trains");
+  }
+});
+
+
+test("old-building disturbance weighs against at-grade 4-tracking, not the tunnel", () => {
+  const m = model();
+  const ext = (pkg, over) => m.evaluatePkg(scenario(m, over), pkg, 30).cba.ext;
+  const aOn = ext("A", { altA: true }), aOff = ext("A", { altA: true, extHeritage: false });
+  assert.ok(aOn < aOff, `Alt A must be penalised when heritage disturbance is on (${aOn} vs ${aOff})`);
+  assert.ok(Math.abs(aOff - aOn - 0.1e9) < 1e6, "the penalty must equal the heritage value slider (0.1 bn/yr default)");
+  const dbOn = ext("DB", { altD: true, altB: true }), dbOff = ext("DB", { altD: true, altB: true, extHeritage: false });
+  assert.ok(Math.abs(dbOn - dbOff) < 1, "the tunnel must NOT be charged the old-building disturbance");
+  for (const [withA, without] of [["AB", "B"], ["AC", "C"], ["ABC", "BC"], ["ADB", "DB"], ["ADC", "DC"]]) {
+    const penalty = ext(without, {}) - ext(withA, {});
+    assert.ok(penalty > 0, `adding at-grade 4-tracking to ${without} must incur the heritage penalty`);
+  }
+});
+
+test("measured section lengths are fixed constants, not adjustable sliders", () => {
+  const m = model();
+  assert.ok(!m.PARAMS.some(p => p.id === "lenSouth" || p.id === "lenNorth"),
+    "the OSM-measured section lengths must not be user-adjustable parameters");
+  const d = m.defaultState();
+  assert.ok(Math.abs(d.lenSouth - 1.65) < 1e-9 && Math.abs(d.lenNorth - 5.14) < 1e-9,
+    "defaults must carry the OSM-measured lengths (Klostergården–Lund C 1.65, Lund C–Stångby 5.14)");
+  const meas = JSON.parse(fs.readFileSync(path.join(__dirname, "osm", "measured.json"), "utf8"));
+  assert.ok(Math.abs(meas["Kloster->LundC"] - d.lenSouth) < 0.05 && Math.abs(meas["LundC->Stangby"] - d.lenNorth) < 0.05,
+    "the constants must match osm/measured.json");
 });

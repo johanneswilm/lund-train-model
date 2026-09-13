@@ -6,7 +6,7 @@ nominal of their stated year unless noted.
 
 ## 1. The place
 
-- Lund (pop. ~95,000; ~130,000 in the municipality) sits ~18 rail-km northeast of Malmö in Skåne,
+- Lund (pop. ~95,000; ~130,000 in the municipality) sits ~16.5 rail-km northeast of Malmö in Skåne,
   southern Sweden. Lund C is Sweden's 3rd busiest station: ~40,000 passengers/day [S4].
 - Lund C is the junction of two main lines:
   - **Västkustbanan (West Coast Line):** Lund–Gunnesbo–Kävlinge–Landskrona–Helsingborg–…–Göt.eborg,
@@ -23,7 +23,8 @@ nominal of their stated year unless noted.
   station south of Lund, rebuilt Åkarp/Hjärup/Burlöv stations, 400 m tunnel under Åkarp) was fully
   opened in 2023 (last tracks in service Dec 2023). Design capacity on Malmö–Lund rose from ~460 to
   ~650 trains/day [S1][S2].
-- **The remaining 2-track bottleneck** is **Klostergården – Lund C – Stångby, ~6 km**. The short
+- **The remaining 2-track bottleneck** is **Klostergården – Lund C – Stångby, ~6 km** (measured on
+  OSM, Sep 2026: 1.65 + 5.14 = 6.8 km). The short
   double-track Klostergården–Lund limits Södra stambanan capacity to ~20–22 trains/hour/direction
   (Trafikverket design figure, ERTMS assumptions) [S7].
 - The **Armaturkurvan** is a sharp curve just south of Lund C. Freight cars derailed there in 1987.
@@ -40,9 +41,10 @@ nominal of their stated year unless noted.
 - Öresund bridge today: ~7 passenger + ~2 freight tph/direction; 2045 prognosis ~8 regional + 2
   long-distance + ~1 freight tph/direction; freight across the bridge 25–35 → ~50 trains/day by 2045 [S8].
 - Train types: Öresundståg X31K (Copenhagen–Malmö–Lund–Helsingborg/Gothenburg; 200 km/h capable),
-  Pågatåg X61 regional, SJ snabbtåg (X55 Delta from ~2027, hourly Stockholm–Copenhagen target),
-  Snälltåget, night trains, Green Cargo/Hector/DB freight. **X2000 retired 2022 — tilt no longer
-  mitigates the curve.**
+  Pågatåg X61 regional, SJ snabbtåg (X2000 tilting EMUs — refurbished 2020–2023 and still in
+  service; new high-speed EMUs on order, hourly Stockholm–Copenhagen target), Snälltåget, night
+  trains, Green Cargo/Hector/DB freight. Tilt stock softens the curve for its own passengers but
+  does not lift the posted curve limit for freight or other traffic.
 - Freight speeds: traditionally 80–100 km/h; from June 2025 new brake tables allow 100–120 km/h and
   850 m trains off the continent (730 m before) [S11]. Faster freight ≈ more paths/hour on mixed lines
   (KTH study: on a mixed line, raising freight speed 100→160 km/h roughly triples feasible freight
@@ -165,11 +167,11 @@ Alt C; capacity requires Alt A or B.
 **Infrastructure**
 | Parameter | Default | Basis |
 |---|---|---|
-| Section length Klostergården–Lund C | 2.5 km | assumption (map) |
-| Section length Lund C–Stångby | 5.0 km | assumption (map) |
+| Section length Klostergården–Lund C | 1.65 km | measured (OSM Sep 2026, `osm/measured.json`; supersedes the earlier 2.5 km map estimate) |
+| Section length Lund C–Stångby | 5.14 km | measured (OSM Sep 2026; supersedes the earlier 5.0 km map estimate) |
 | Tracks today | 2 | fact |
 | Design capacity, 2-track section | 20–22 tph/dir | [S7] |
-| Curve speed (Armaturkurvan) | 80 km/h | ASSUMPTION — verify |
+| Curve speed (Armaturkurvan) | 80 km/h | ASSUMPTION — verify (alignment measured: R ≈ 334 m ⇒ 80 km/h plausible, >~90 km/h not) |
 | Line speed Södra stambanan | 200 km/h pax / 90–120 freight | [S11] |
 | New-pair speed (Alt A north of Stångby) | 250 km/h | [S13] |
 | Lund C dwell time (pax) | 1.5–2.5 min (type-dependent) | assumption |
@@ -206,10 +208,14 @@ Alt C; capacity requires Alt A or B.
 - Value of time: business ~550 SEK/h, commute ~230, leisure ~140; freight train-hour ~6,000 SEK.
 - Punctuality value: ~1–2 SEK per expected delay-minute per passenger; reliability premium for freight.
 - Discount rate 3.5% (Swedish official), horizon 40–60 years, demand growth scenarios ±.
-- Externalities: noise, barrier effects, accident risk (dangerous goods through centre), CO2.
+- Externalities: noise, barrier effects, accident risk (dangerous goods through centre), CO2,
+  old-building/heritage disturbance in the centre (demolitions at Armaturkurvan, setting impacts —
+  charged to at-grade 4-tracking, not the tunnel; ASEK does not monetise it, model default
+  0.1 bn/yr swing, adjustable).
 
 ## 7. Open questions / uncertainties the model must surface
-- Exact speed limit and curvature of Armaturkurvan (get Trafikverket linebook / Banverket "BIS").
+- Exact speed limit at Armaturkurvan (curvature is measured: R ≈ 334 m; the posted limit still
+  needs the Trafikverket linebook / Banverket "BIS" value).
 - Exact current timetable paths at Lund C throat (punctuality data: Trafikverket "TIS"/"Först"?
   — use TRV open data or LÖT demand model for calibration).
 - Fehmarn Bält traffic ramp-up (2029 vs German 2034), Öresundståg fleet (X31K replacement),

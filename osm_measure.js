@@ -126,12 +126,22 @@ function route(a, b) {
   const { dist, prev } = dijkstra(pts[a].id);
   const d = dist.get(pts[b].id);
   if (d === undefined) return null;
-  return { km: km(d), path: pathTo(prev, pts[b].id) };
+  return { km: km(d), path: pathTo(prev, pts[b].id), gapA: pts[a].gap, gapB: pts[b].gap };
 }
 const line = (a, b) => hav({ lat: pts[a].lat, lon: pts[a].lon }, { lat: pts[b].lat, lon: pts[b].lon });
 
 const out = {};
-function put(label, r) { out[label] = r ? +r.km.toFixed(2) : null; if (r) console.log(`${label}: ${r.km.toFixed(2)} km`); else console.log(`${label}: n/a`); }
+// A route is only trustworthy if both endpoints snapped close to the rail graph. A large snap
+// means the extract does not reach the destination and Dijkstra stopped at the extract boundary —
+// record null instead of a silently truncated distance.
+const MAX_SNAP_M = 1000;
+function put(label, r) {
+  const gap = r ? Math.max(r.gapA ?? Infinity, r.gapB ?? Infinity) : Infinity;
+  const ok = r != null && gap <= MAX_SNAP_M;
+  if (r && !ok) console.error(`WARNING ${label}: station snap ${gap.toFixed(0)} m > ${MAX_SNAP_M} m — destination outside the extract, recording null`);
+  out[label] = ok ? +r.km.toFixed(2) : null;
+  console.log(`${label}: ${ok ? r.km.toFixed(2) + " km" : "n/a"}`);
+}
 
 put("Kloster->LundC", route("kloster", "lund"));
 put("LundC->Stangby", route("lund", "stangby"));
@@ -148,6 +158,12 @@ put("Kavlinge->LundC", route("kavlinge", "lund"));
 console.log(`Kavlinge->Stangby straight-line: ${km(line("kavlinge", "stangby")).toFixed(2)} km`);
 out["KavlingeStangbyStraight"] = +km(line("kavlinge", "stangby")).toFixed(2);
 put("Teckomatorp->LundC", route("tecko", "lund"));
+// Alt B1 legs (existing freight route Malmö–Kävlinge–Teckomatorp–Eslöv–Stångby) so the
+// +38.8 km detour vs via Lund C is fully reproducible from this file
+put("Kavlinge->Teckomatorp", route("kavlinge", "tecko"));
+put("Teckomatorp->Eslov", route("tecko", "eslov"));
+put("Eslov->Stangby", route("eslov", "stangby"));
+put("Malmo->Stangby(via Lund)", route("malmo", "stangby"));
 const chordStraight = line("tecko", "stangby");
 console.log(`Teckomatorp->Stangby straight-line: ${km(chordStraight).toFixed(2)} km`);
 out["TeckoStangbyStraight"] = +km(chordStraight).toFixed(2);

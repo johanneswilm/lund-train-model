@@ -45,7 +45,9 @@ in-app **"About / assumptions"** panel lists what should be cross-checked with T
 Geometry is measured, not invented: section lengths, the Kävlinge→Stångby chord and the
 Armaturkurvan curve radius come from OpenStreetMap rail data (Sep 2026) and were cross-checked
 against a scale-calibrated Google Maps screenshot (200 m scale bar = 76 px ⇒ 2.63 m/px). The
-minimum curve radius is ≈335–355 m just south of Lund C (`osm/measured.json`, `osm_measure.js`).
+minimum curve radius is ≈334 m just south of Lund C (`osm/measured.json`, `osm_measure.js`; routes
+the corridor extract cannot reach, e.g. Stockholm, are recorded as null rather than truncated
+distances — the measurement script warns when a station snap exceeds 1 km).
 Everything else — capacity factors, delay distributions, costs for Alt C, externality values — is a
 transparent assumption you can change in the UI.
 
@@ -64,15 +66,17 @@ node --test test_model.js
 ```
 
 The suite extracts the model script from `index.html` and checks all 16 alternative combinations,
-capacity semantics (busiest-pair utilisation, C-not-capacity, B variants, tunnel checks), CBA
-behaviour (negative growth, break-even, closure resilience), and the schematic/animation geometry.
+capacity semantics (busiest-pair utilisation, empty-pair handling, C-not-capacity, B variants,
+tunnel checks), CBA behaviour (negative growth, break-even, closure resilience and monetised
+closure cost, freight-scaled externalities), the shared freight-detour formula, animation spawn-rate
+totals, the measured-data consistency (`osm/measured.json`), and the schematic/animation geometry.
 
 ## Repository layout
 
 | Path | Purpose |
 |---|---|
 | `index.html` | The entire model (UI, SVG schematic/animation, engine, tests target) |
-| `test_model.js` | Node test suite (29 tests) |
+| `test_model.js` | Node test suite (38 tests) |
 | `lund_rail_fact_sheet.md` | Fact sheet with sourced facts and open questions (§9: sources S1–S23) |
 | `lund_rail_update_delta.md` | Later research delta that was verified and folded into the model |
 | `lund_rail_schematic.png` | Reference rendering of the schematic |
