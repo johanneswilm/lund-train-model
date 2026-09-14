@@ -138,10 +138,14 @@ the model; none changes the alternatives A–D themselves.
   Älmhult–Hässleholm saturates; Västkustbanan freight after full double track.
 - [E4] Malmö stad / AFRY (2023): metro 8,000 pax/h/dir + 4 freight tph freed; 60,000 travellers/day
   2040; regional trains must double by 2035 without metro.
-- [E5] Sweco for Øresundsbro Konsortiet (2024, via News Øresund): 8 decided measures → 3× capacity
-  by 2035–2040; 4× by 2050–2100 needs immersed freight tunnel Pepparholm–Kastrup (12–15 bn DKK),
-  4 tracks Kastrup–Kalvebod, and an OUTER FREIGHT TRACK OUTSIDE MALMÖ AND LUND (directly supports
-  Alt B in our alternatives).
+- [E5] Sweco, "Potential i befintlig Öresundsförbindelse" for Øresundsbro Konsortiet (2024-02-01):
+  8 decided measures → 3× capacity by 2035–2040 (+200% Öresundståg travel, +300% freight); 4× by
+  2050–2100 needs immersed freight tunnel Pepparholm–Kastrup (12–15 bn DKK), 4 tracks
+  Kastrup–Kalvebod, and an OUTER FREIGHT TRACK OUTSIDE MALMÖ AND LUND (directly supports Alt B in
+  our alternatives). Report: oresundsbron.com, "Studier och rapporter"
+  (https://www.oresundsbron.com/sv/om-oresundsbron/statistik-och-rapporter/studier-och-rapporter);
+  coverage: News Øresund 2024-03-07 (https://www.newsoresund.se/oresundsbron-kapacitet-2100/).
+  Also cited by SOU 2026:17 "Öresundsförbindelser 2050", footnote 15.
 - [E6] Regeringen.se 2026-03-02 / SOU 2026:17: bilateral investigation from 2027; capacity,
   redundancy, NATO/security framing.
 - [E7] Riksdagen motion 2025/26:1045 (El-Haj): M5 alignment, Malmö stations in översiktsplan,
