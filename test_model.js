@@ -38,6 +38,7 @@ function model() {
                buildPattern, runMC, verdictOf, travelInfo, capexOf, cba, selPkg,
                freightBreakEven, closureResilience, freightUnsolved, evaluatePkg, tornadoFor,
                B1_EXTRA_KM, capexIdsOf, freightDetour, NOISE_FR, frProfileW, frWbar, frDailySpawns,
+               externalDemand, MEASURED,
                setState: (k, v) => { S[k] = v; }, getState: () => Object.assign({}, S) };`)();
   return cachedModel;
 }
@@ -580,4 +581,94 @@ test("measured section lengths are fixed constants, not adjustable sliders", () 
   const meas = JSON.parse(fs.readFileSync(path.join(__dirname, "osm", "measured.json"), "utf8"));
   assert.ok(Math.abs(meas["Kloster->LundC"] - d.lenSouth) < 0.05 && Math.abs(meas["LundC->Stangby"] - d.lenNorth) < 0.05,
     "the constants must match osm/measured.json");
+});
+
+
+/* ------------------------------------------------------------------ */
+test("external factors are NEUTRAL at defaults: demand unchanged, nothing suppressed", () => {
+  const m = model();
+  const P = P2026(m);
+  const e = m.externalDemand(P);
+  assert.ok(Math.abs(e.reg - P.tphReg) < 1e-9 && Math.abs(e.ld - P.tphLD) < 1e-9 && Math.abs(e.fr - P.tphFr) < 1e-9,
+    "with default external settings the scheduled flow must equal the raw demand");
+  assert.equal(e.supPax, 0, "2026 cross-sound flow must fit the bridge/Citytunneln caps");
+  assert.equal(e.supFr, 0, "2026 freight flow must fit the bridge slots");
+  assert.ok(Math.abs(e.frDaily - P.frDaily) < 1e-9, "freight daily volume unchanged at defaults");
+});
+
+test("operations haircut scales practical capacity multiplicatively", () => {
+  const m = model();
+  const cap0 = m.capacityOf("dn", scenario(m, { opsHaircut: 0 })).capCentral;
+  const cap10 = m.capacityOf("dn", scenario(m, { opsHaircut: 10 })).capCentral;
+  assert.ok(Math.abs(cap10 / cap0 - 0.9) < 1e-9, `10% haircut must cut capacity to 90% (got ${(100 * cap10 / cap0).toFixed(1)}%)`);
+  // ...and the 2026 baseline stays in the fragile band with the default 10% haircut
+  const P = P2026(m);
+  assert.equal(m.verdictOf(m.capacityOf("dn", P).utilCentral, 0.99).v, "FRAGILE");
+});
+
+test("upstream caps bind BEFORE Lund: 2045 cross-sound flow is suppressed on the chain", () => {
+  const m = model();
+  const P = P2045(m);
+  const e = m.externalDemand(P);
+  const xsPax = (P.xSoundShare / 100) * (P.tphReg + P.tphLD);
+  assert.ok(xsPax > e.caps.paxCap, `test premise: cross-sound flow ${xsPax} must exceed the chain cap ${e.caps.paxCap}`);
+  assert.ok(e.supPax > 0, "passenger flow must be suppressed upstream of Lund");
+  assert.ok(Math.abs((e.reg + e.ld) - (P.tphReg + P.tphLD - e.supPax)) < 1e-9,
+    "the corridor must carry only what the chain lets through");
+  // ordering: Citytunneln's 10 channels bind before the upgraded bridge; border control caps at 8
+  const e2 = m.externalDemand(scenario(m, { oreLadder: "t2", borderCtrl: false }));
+  assert.equal(e2.caps.paxCap, 10, "with the bridge upgraded, Citytunneln (10 channels) becomes the binding link");
+  const e3 = m.externalDemand(scenario(m, { oreLadder: "t2", borderCtrl: true }));
+  assert.equal(e3.caps.paxCap, 8, "border-control friction holds the cap at 8 whatever the infrastructure ladder says");
+});
+
+test("double-deck fleet cuts scheduled trains; metro cuts passengers; seats alone must not cut demand", () => {
+  const m = model();
+  const P = scenario(m, m.PRESETS["2045"]);
+  const base = m.externalDemand(P);
+  const dd = m.externalDemand(scenario(m, { ...m.PRESETS["2045"], fleetSeats: "1100", ddGauge: "cleared" }));
+  assert.ok(Math.abs(dd.sched.reg - base.sched.reg * 711 / 1100) < 1e-9,
+    "gauge-cleared double-deckers must cut scheduled regional trains by 711/1100");
+  assert.ok(Math.abs(dd.regDem - base.regDem) < 1e-9,
+    "seats alone must not change passenger DEMAND (carried passengers may even rise as suppression lifts)");
+  const metro = m.externalDemand(scenario(m, { ...m.PRESETS["2045"], metro2040: true, metroShare: 40 }));
+  assert.ok(Math.abs(metro.regDem - base.regDem * (1 - 0.4 * 0.8)) < 1e-9,
+    "metro 2040 must remove the cross-sound share of regional demand");
+  // the doc's headline scenario: metro ON + double-deck ON slashes the scheduled flow at 2045
+  const combo = m.externalDemand(scenario(m, { ...m.PRESETS["2045"], fleetSeats: "1100", ddGauge: "cleared", metro2040: true }));
+  const raw = P.tphReg + P.tphLD + P.tphFr;
+  assert.ok(combo.reg + combo.ld + combo.fr < 0.75 * raw,
+    `metro + double-deck should cut the through-Lund flow well below the raw ${raw} tph/dir (got ${(combo.reg + combo.ld + combo.fr).toFixed(1)})`);
+});
+
+test("double-deck confined to Swedish sections only helps the non-cross-sound share", () => {
+  const m = model();
+  const P = scenario(m, { fleetSeats: "1100", ddGauge: "uncleared", xSoundShare: 80 });
+  const e = m.externalDemand(P);
+  // seatFactor = 0.2×(711/1100) + 0.8×1 = 0.929 — most trains still run because 80% are cross-sound
+  assert.ok(Math.abs(e.sched.reg / P.tphReg - (0.2 * 711 / 1100 + 0.8)) < 1e-9,
+    "uncleared gauge must limit the double-deck benefit to the Swedish share");
+});
+
+test("850 m freight trains and the policy push scale freight trains for a given tonnage", () => {
+  const m = model();
+  const e850 = m.externalDemand(scenario(m, { frTrainLen: "850" }));
+  assert.ok(Math.abs(e850.fr - 1.5 * 730 / 850) < 1e-9 && Math.abs(e850.frDaily - 65 * 730 / 850) < 1e-9,
+    "850 m trains must cut freight trains by 730/850 (~−14%)");
+  const ePush = m.externalDemand(scenario(m, { policyPush: 30 }));
+  assert.ok(Math.abs(ePush.fr - 1.5 * 1.3) < 1e-9, "policy push must add freight trains on top");
+});
+
+test("Ostlänken multiplies the LD time benefit of the speed options (C/D) only", () => {
+  const m = model();
+  reseed(71);
+  const c0 = m.evaluatePkg(scenario(m, { altC: true }), "C", 40).cba.timeBen;
+  reseed(71);
+  const c1 = m.evaluatePkg(scenario(m, { altC: true, ostlanken: true, ostFactor: 1.5 }), "C", 40).cba.timeBen;
+  assert.ok(Math.abs(c1 - c0 * 1.5) < 1e-6 * Math.abs(c0) + 1, "C's time benefit must scale by the Ostlänken factor");
+  reseed(71);
+  const a0 = m.evaluatePkg(scenario(m, { altA: true }), "A", 40).cba.timeBen;
+  reseed(71);
+  const a1 = m.evaluatePkg(scenario(m, { altA: true, ostlanken: true, ostFactor: 1.5 }), "A", 40).cba.timeBen;
+  assert.equal(a0, a1, "Alt A has no speed benefit to multiply");
 });

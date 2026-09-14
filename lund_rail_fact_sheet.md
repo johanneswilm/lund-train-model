@@ -214,6 +214,10 @@ Alt C; capacity requires Alt A or B.
   0.1 bn/yr swing, adjustable).
 
 ## 7. Open questions / uncertainties the model must surface
+- The external factors that largely decide how much traffic ever reaches Lund (Öresund link slots,
+  border control, Citytunneln channels, fleet seats, Öresundsmetron, freight train lengths) are
+  collected with sources E1–E12 in `lund_rail_external_factors.md` and wired into the model's
+  "External factors" panel — their shares and lever magnitudes are sketch assumptions to calibrate.
 - Exact speed limit at Armaturkurvan (curvature is measured: R ≈ 334 m; the posted limit still
   needs the Trafikverket linebook / Banverket "BIS" value).
 - Exact current timetable paths at Lund C throat (punctuality data: Trafikverket "TIS"/"Först"?

@@ -26,9 +26,13 @@ trade-offs between four (combinations of) measures:
 | **D** | Tunnel under the city | Speed + capacity + removes the barrier in one move; reference option — expensive, slow, and its closure blocks the corridor with no diversion |
 
 Everything is editable: demand, line speeds, headways, occupation factors, dwell times, CAPEX, risk
-premia, ASEK-style values. Every non-obvious default has a **FACT vs ASSUMPTION** tooltip, and the
-in-app **"About / assumptions"** panel lists what should be cross-checked with Trafikverket
-(linebook/BIS values, timetable data, costs, forecasts).
+premia, ASEK-style values — plus an **External factors** panel (`lund_rail_external_factors.md`,
+sources E1–E12): the Öresund link slot ladder, border-control friction, Citytunneln channel cap,
+fleet seats (double-deck lever), Öresundsmetron/HH-link scenarios, freight train length, an
+operations haircut, Fehmarn ramp and Ostlänken. Supply-side caps bind **before** Lund's own
+capacity, and the ANSWER card reports when the corridor is upstream-limited. Every non-obvious
+default has a **FACT vs ASSUMPTION** tooltip, and the in-app **"About / assumptions"** panel lists
+what should be cross-checked with Trafikverket (linebook/BIS values, timetable data, costs, forecasts).
 
 ## What this is not
 
@@ -76,9 +80,10 @@ totals, the measured-data consistency (`osm/measured.json`), and the schematic/a
 | Path | Purpose |
 |---|---|
 | `index.html` | The entire model (UI, SVG schematic/animation, engine, tests target) |
-| `test_model.js` | Node test suite (38 tests) |
+| `test_model.js` | Node test suite (45 tests) |
 | `lund_rail_fact_sheet.md` | Fact sheet with sourced facts and open questions (§9: sources S1–S23) |
 | `lund_rail_update_delta.md` | Later research delta that was verified and folded into the model |
+| `lund_rail_external_factors.md` | External supply/demand factors (Öresund link, Citytunneln, fleet, metro…) with sources E1–E12, wired into the "External factors" panel |
 | `lund_rail_schematic.png` | Reference rendering of the schematic |
 | `osm/` | OSM extracts and measured distances/radii (`measured.json`) |
 | `osm_measure.js` | Script that derived the measurements from the OSM extracts |

@@ -286,6 +286,7 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
     <li><b>Delays</b>: hourly timetable built greedily (LD first, regional, freight in gaps), then Monte Carlo with exponential primary delays; conflicts resolved first-come-first-served. Punctuality = share of trains &#8804;5 min.</li>
     <li><b>CBA</b>: Swedish ASEK-style defaults (3.5% discount, 40-yr horizon, VoT 550/230/140 SEK/h). Benefits: passenger time savings, reliability (&#8776;1.5 SEK per expected delay-minute per passenger), freight train-hour value, externalities toggles — including old-building/heritage disturbance in the centre, which is charged to at-grade 4-tracking (Alt A and packages containing it) and not to the tunnel. "Congestion relief" credit uses a rule-of-half generated-traffic approximation when demand exceeds do-nothing capacity.</li>
     <li><b>Alt D couples to Alt B</b>: Swedish practice bans freight/diesel from long city tunnels (Citytunneln Malmö precedent), so D cannot remove freight from the equation by itself.</li>
+    <li><b>External factors bind BEFORE Lund</b> (see <code>lund_rail_external_factors.md</code>, sources E1–E12). Demand-side levers (fleet seats, metro, HH link, substitution, 850 m freight trains, policy push) turn raw demand into scheduled trains; then the supply-side caps — the Öresund link slot ladder, the border-control brake and Citytunneln's 10 channels — limit what ever reaches Lund. Suppressed flow is reported as upstream-limited in the ANSWER card: capacity gains at Lund are moot for trains that never arrive. A generic operations haircut (default 10%) shaves practical capacity. The cross-sound (80%) and bridge-freight (70%) shares are assumptions.</li>
   </ul>
   <h4>Key facts used (see fact sheet &#167;9 for sources S1–S23)</h4>
   <ul>
@@ -305,6 +306,7 @@ table.cmp td.num{font-variant-numeric:tabular-nums}
     <li><b>Alt B2 alignment/cost</b> — the new Kävlinge→Stångby chord has no formal Trafikverket study; cost anchors +3–4 bn add-on (2020) vs 10–15 bn standalone (2026) both exposed in the slider. Corridor reservation in north-west Lund municipality + Stångby per the 2024 comprehensive plan.</li>
     <li><b>National-plan acceleration</b> — the April 2026 plan front-loads Hässleholm–Lund (1,171 bn SEK frame; four tracks through Lund = key measure [S23]), but Trafikverket's 2026 timetable still pointed to 2043–2048. Confirm the current plan for the corridor; the toggle brackets 2037 vs base 2040.</li>
     <li>Fehmarn Bält ramp-up (2029 vs German-side ~2034), Öresundståg fleet renewal, Swedish HSR policy status.</li>
+    <li><b>External factors</b> — the Öresund slot ladder (8+2 today), the border-control brake, Citytunneln channel split (16 − 6 Pågatåg), metro/HH-link effects, fleet seat counts and the cross-sound/bridge-freight shares are documented with sources E1–E12 in <code>lund_rail_external_factors.md</code>; the shares, lever magnitudes and the operations haircut are sketch assumptions to calibrate against Trafikverket/Øresundsbro Konsortiet data.</li>
     <li>Demolition/compensation cost at Armaturkurvan; land-value uplift of decking ("Lund+" ~2 bn).</li>
     <li>Alt C cost (no official estimate; model default 10–15 bn calibrated against new-build alternatives 20–41 bn for ~35 km [S7]).</li>
     <li>Citytunneln precedents for Alt D: freight/diesel ban, emergency-brake override, storm-Sven 2013 flood near-miss, closure/resilience assumptions [S15][S16]; tunnel settlement/heritage risk to Klosterkyrkan [S17].</li>
@@ -355,6 +357,7 @@ const MEASURED = { lenSouth: 1.65, lenNorth: 5.14 }; // Klostergården–Lund C,
 const GROUPS = [
  {id:"traffic", label:"Traffic demand"},
  {id:"infra", label:"Infrastructure & alternatives", note:`Measured section lengths (OSM Sep 2026, FACT — not adjustable): Klostergården–Lund C ${MEASURED.lenSouth} km · Lund C–Stångby ${MEASURED.lenNorth} km (bottleneck ≈ 6.8 km). See osm/measured.json.`},
+ {id:"ext", label:"External factors", note:"Factors OUTSIDE Lund that cap or reduce the flow through the corridor (lund_rail_external_factors.md, sources E1–E12). Supply-side caps (Øresund bridge, Citytunneln) bind BEFORE Lund's own capacity; demand-side levers cut the trains needed. Watch the 'External factors' line in the ANSWER card."},
  {id:"costs", label:"Costs (CAPEX)"},
  {id:"cba", label:"CBA parameters"},
  {id:"sim", label:"Simulation"}
@@ -406,6 +409,23 @@ const PARAMS = [
  {id:"dClosureDays", g:"infra", label:"Alt D closure days (flood/fire/tech)", min:0, max:15, step:0.5, def:3, unit:"days/yr", tip:`0.5–2% of days blocked with NO corridor diversion — storm Sven 2013 near-miss in Citytunneln [S16] (${A}). See closure-resilience KPI.`},
  {id:"dBuildDelay", g:"infra", label:"Alt D extra build time vs A", min:0, max:15, step:1, def:7, unit:"yr", tip:`Tunnel takes +5–10 yr — misses the Fehmarn-driven demand surge (${A}, §4).`},
  {id:"dVertPen", g:"infra", label:"Alt D vertical circulation penalty", min:0, max:4, step:0.25, def:1.5, unit:"min", tip:`Underground station access (TSI SRT evacuation routes) (${A}).`},
+ // external factors (lund_rail_external_factors.md)
+ {id:"oreLadder", g:"ext", label:"Öresund link slot ladder", type:"select", def:"t0", opts:[["t0","8 pax + 2 freight tph (today)"],["t1","10 pax + 3 freight tph (Kastrup + CPH Syd upgrades)"],["t2","12 pax + 2 freight tph (full Sweco package, ~2035–40)"]], tip:`Capacity ladder for the fixed link: raw ~15 pax tph, cut to 12+2 by mixing, to 8+2 by Kastrup feeding [E1]. RailSys: 3 freight ⇒ 10 pax fit; Sweco 2024: 8 decided measures triple capacity by 2035–40 [E2][E5] (${F} anchors).`},
+ {id:"borderCtrl", g:"ext", label:"Border-control friction (ID checks)", type:"check", def:true, tip:`Per Trafikverket the CURRENT binding brake on passenger frequencies over the bridge is the Swedish border control for arrivals from Denmark [E3]. ON: passenger cap held at today's practical ceiling (8 tph) whatever the ladder says; OFF: the ladder applies fully (${F} effect, ${A} magnitude).`},
+ {id:"xSoundShare", g:"ext", label:"…of which cross-sound (bridge/Citytunneln)", min:40, max:100, step:5, def:80, unit:"%", tip:`Share of through-Lund passenger trains that continue over the Citytunneln and the bridge (Öresundståg + CPH-bound LD) (${A} — calibrate with timetable). The cross-sound flow is what the upstream caps bite on.`},
+ {id:"frBridgeShare", g:"ext", label:"Freight via the bridge", min:0, max:100, step:5, def:70, unit:"%", tip:`Share of through-Lund freight that crosses the Öresund link (continental flow; the rest is Trelleborg-ferry and Malmö-origin) (${A}). Bridge freight prognosis: ~50/day 2030, ~63/day 2040, practical ceiling ≈ 90 slots/day [E2][E3].`},
+ {id:"opsHaircut", g:"ext", label:"Operations haircut on practical capacity", min:0, max:20, step:1, def:10, unit:"%", tip:`Driver availability, maintenance possessions and fleet shortages shave practical capacity below the timetableable figure — generic 10–15% suggested [E-A6] (${A}).`},
+ {id:"fleetSeats", g:"ext", label:"Seats per regional train (fleet)", type:"select", def:"711", opts:[["711","711 seats (today, 240 m 3-unit)"],["810","810 (new single-deck)"],["990","990 (double-deck, 250 m)"],["1100","1,100 (double-deck, 300 m)"]], tip:`The double-decker lever: same passengers, fewer trains [E1]. Modelled as scheduled regional trains = demand-equivalents × 711/seats. Catch: the Kastrup tunnel gauge may confine double-deckers to Swedish sections (see next toggle).`},
+ {id:"ddGauge", g:"ext", label:"Kastrup gauge for double-deckers", type:"select", def:"uncleared", opts:[["uncleared","not cleared — DD confined to Swedish sections"],["cleared","cleared — DD runs through to CPH"]], tip:`A double-deck Öresundståg may be unable to run through to Copenhagen unless the Kastrup tunnel/clearance profile is rebuilt [E1] (${A} scenario). Only matters when a double-deck fleet is selected above.`},
+ {id:"frTrainLen", g:"ext", label:"Freight train length", type:"select", def:"730", opts:[["730","730 m (legacy)"],["850","850 m (new brake tables)"]], tip:`New brake tables (June 2025) allow 850 m continental trains, ~+15% tonnage per train ⇒ ~13% fewer trains for the same tonnage; Malmö yard is being adapted [E2][E11] (${F}). Freight speed itself is the Infrastructure-group slider.`},
+ {id:"policyPush", g:"ext", label:"Policy-driven freight uplift", min:0, max:40, step:5, def:0, unit:"%", tip:`EU modal-shift targets and German/Danish rail-freight promotion could push MORE freight onto the corridor than the market base prognosis (+20–40%) [E2] (${A} scenario, default off).`},
+ {id:"metro2040", g:"ext", label:"Öresundsmetron opens ~2040", type:"check", def:false, tip:`SOU 2026:17 → bilateral investigation 2027; ~72 bn SEK, CBA ~1.23, opening ~2040 if decided [E6][E7]. AFRY: absorbs ~8,000 local cross-sound pax/h/dir, frees bridge capacity incl. ~1 freight slot [E4]. Scenario, not base case.`},
+ {id:"metroShare", g:"ext", label:"…cuts cross-sound regional rail by", min:10, max:60, step:5, def:40, unit:"%", tip:`Share of cross-sound REGIONAL rail demand the metro absorbs (default 30–50%) [E4] (${A}).`},
+ {id:"hhLink", g:"ext", label:"HH link Helsingborg–Helsingør", type:"check", def:false, tip:`Fixed link Helsingborg–Helsingør: not decided; scenario studies show ~10% of bridge passengers diverted + freight redundancy [E2]. Default OFF.`},
+ {id:"substShare", g:"ext", label:"Land-side substitution (bus/cycle/hybrid)", min:0, max:15, step:1, def:0, unit:"%", tip:`Malmö–Lund is ~20 min by road; regional bus, the planned cycle highway and hybrid work skim the shortest trips and flatten peaks (${A}, 0–10% suggested).`},
+ {id:"fehmarnFast", g:"ext", label:"Fehmarn fast ramp (2029 vs 2034)", type:"check", def:false, tip:`Fehmarn Bält rail opens 2029 but German feeder works ~2034 cap the initial benefit [E3]. ON: the 2035 preset uses the fast-ramp values (freight ~120/day; Danish prognosis ~74 continental trains/day by 2035, ~90% continuing to SE/NO [E2]). Affects the 2035 preset only.`},
+ {id:"ostlanken", g:"ext", label:"Ostlänken built (~2030s)", type:"check", def:false, tip:`Stockholm–Copenhagen is to gain ~30–40 min from Ostlängen + the new Hässleholm–Lund tracks — but the gain materialises only if the Lund section is fixed [S8][S13]. ON: LD time savings of the speed options (C, D) are scaled by the factor below (${A} magnitude).`},
+ {id:"ostFactor", g:"ext", label:"…LD time-benefit multiplier", min:1, max:2, step:0.05, def:1.25, unit:"×", tip:`How much of the downstream 30–40 min stake is unlocked by fixing Lund (${A}).`},
  // costs
  {id:"capexA", g:"costs", label:"Alt A — Lund section", min:3, max:12, step:0.25, def:6, unit:"bn SEK", tip:`5–7 bn (2020 pre-study) [S5] (${F} anchor, range editable).`},
  {id:"capexB", g:"costs", label:"Alt B — outer freight track", min:1.5, max:15, step:0.25, def:3.5, unit:"bn SEK", tip:`Expose both anchors: B2 add-on +3–4 bn (2020 pre-study [S5]) or 10–15 bn standalone (Lund Liberalerna 2026 [S22]); B1 existing-corridor upgrade 2–5 bn (${A}). ${F} anchors, range editable.`},
@@ -460,9 +480,53 @@ const mean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0;
 const pctile = (a, p) => { if (!a.length) return 0; const b = [...a].sort((x, y) => x - y); return b[Math.min(b.length - 1, Math.floor((p / 100) * (b.length - 1)))]; };
 
 function flagsOf(pkg){ return { A: pkg.includes("A"), B: pkg.includes("B") || pkg.includes("D"), C: pkg.includes("C"), D: pkg.includes("D") }; }
+/* EXTERNAL FACTORS (lund_rail_external_factors.md): compute what the Lund corridor actually
+   carries. ORDERING MATTERS (per the doc's wiring guide):
+   1. demand-side levers (fleet seats, metro, HH link, substitution, freight train length,
+      policy push) turn raw demand into SCHEDULED trains;
+   2. supply-side caps (Öresund link slots, Citytunneln channels) then bind BEFORE Lund —
+      the corridor only carries what the upstream chain lets through.
+   Returns scheduled through-Lund tph per type (post-cap), the passenger-equivalent volumes
+   for the CBA, and the suppressed (upstream-limited) flow for the "Lund relevance" report. */
+function externalDemand(P){
+  const ladder = { t0: { pax: 8, fr: 2 }, t1: { pax: 10, fr: 3 }, t2: { pax: 12, fr: 2 } }[P.oreLadder] || { pax: 8, fr: 2 };
+  const orePaxCap = P.borderCtrl ? Math.min(ladder.pax, 8) : ladder.pax; // border control is today's brake [E3]
+  const oreFrCap = ladder.fr + (P.metro2040 ? 1 : 0);                    // metro frees a freight slot [E4]
+  const citytunCap = 10;   // Citytunneln: 16 channels − 6 reserved Pågatåg [E1][E9]; CPH H allows ~11 [E1]
+  const xs = P.xSoundShare / 100;
+  // demand-side levers ------------------------------------------------
+  const seats = +P.fleetSeats;
+  const seatFactor = (seats <= 810 || P.ddGauge === "cleared") ? 711 / seats
+    : (1 - xs) * (711 / seats) + xs; // double-deck confined to Swedish sections if Kastrup gauge not cleared [E1]
+  const metroCut = P.metro2040 ? (P.metroShare / 100) * xs : 0;
+  const hhCut = P.hhLink ? 0.10 * xs : 0;                                // HH link ~−10% of bridge pax [E2]
+  const substCut = P.substShare / 100;
+  const regDem = P.tphReg * (1 - metroCut) * (1 - hhCut) * (1 - substCut); // passenger-equivalents (711-seat trains)
+  const regSched = regDem * seatFactor;                                  // scheduled regional trains
+  const frScale = (+P.frTrainLen === 850 ? 730 / 850 : 1) * (1 + P.policyPush / 100);
+  const frSched = P.tphFr * frScale, frDailySched = P.frDaily * frScale;
+  // supply-side caps bind BEFORE Lund ---------------------------------
+  const paxCap = Math.min(orePaxCap, citytunCap);
+  const xsPax = xs * (regSched + P.tphLD);
+  const supPax = Math.max(0, xsPax - paxCap);
+  const xsFr = (P.frBridgeShare / 100) * frSched;
+  const supFr = Math.max(0, xsFr - oreFrCap);
+  const paxTot = regSched + P.tphLD;
+  const paxThrough = paxTot - supPax, frThrough = frSched - supFr;
+  const reg = paxTot > 0 ? paxThrough * regSched / paxTot : 0;
+  const ld = paxTot > 0 ? paxThrough * P.tphLD / paxTot : 0;
+  const paxFactor = paxTot > 0 ? paxThrough / paxTot : 1; // passengers actually carried vs offered
+  return { reg, ld, fr: frThrough,
+           frDaily: frDailySched * (frSched > 0 ? frThrough / frSched : 1),
+           regDem,                                                          // regional demand (passenger-equivalents, pre-cap)
+           pax: { reg: regDem * paxFactor, ld: P.tphLD * paxFactor }, // CBA passenger volumes
+           sched: { reg: regSched, ld: P.tphLD, fr: frSched },        // pre-cap scheduled (for display)
+           supPax, supFr, caps: { paxCap, orePaxCap, citytunCap, oreFrCap } };
+}
 function demandMap(pkg, P){
   const f = flagsOf(pkg);
-  return { reg: P.tphReg, ld: f.C ? 0 : P.tphLD, fr: (f.B || f.D) ? 0 : P.tphFr, ldC: f.C ? P.tphLD : 0 };
+  const e = externalDemand(P);
+  return { reg: e.reg, ld: f.C ? 0 : e.ld, fr: (f.B || f.D) ? 0 : e.fr, ldC: f.C ? e.ld : 0 };
 }
 function centralSpeeds(f, P){
   const c = P.curveSpeed;
@@ -520,7 +584,8 @@ function pairCapacity(pair, dem, sp, P){
   const D = items.reduce((s, i) => s + i.d, 0);
   if (D <= 0) return { cap: 0, util: 0, D: 0, items, wOcc: 0 }; // an empty pair contributes no phantom capacity to the summed-pairs metric
   const wOcc = items.reduce((s, i) => s + i.d * i.occ, 0) / D;
-  const cap = Math.min(P.designCap, 60 / wOcc);
+  // operations haircut: drivers, possessions and fleet shortages shave practical capacity [E-A6]
+  const cap = Math.min(P.designCap, 60 / wOcc) * (1 - (P.opsHaircut || 0) / 100);
   return { cap, util: D / cap, D, items, wOcc };
 }
 function capacityOf(pkg, P){
@@ -690,7 +755,10 @@ function capexOf(pkg, P){
 function cba(pkg, P, sims){
   const f = flagsOf(pkg), base = sims.dn, sim = sims[pkg];
   const BN = 1e9; // bn SEK -> SEK
-  const regDay = P.tphReg * P.dailyFactor * 2, ldDay = P.tphLD * P.dailyFactor * 2, frDay = P.frDaily;
+  // daily volumes from the external-factors pipeline: passenger-equivalents actually carried
+  // (demand levers applied, upstream suppression deducted), scheduled freight trains
+  const ext0 = externalDemand(P);
+  const regDay = ext0.pax.reg * P.dailyFactor * 2, ldDay = ext0.pax.ld * P.dailyFactor * 2, frDay = ext0.frDaily;
   const shSum = Math.max(1, P.shB + P.shC + P.shL);
   const votW = (P.votB * P.shB + P.votC * P.shC + P.votL * P.shL) / shSum;
   // delay reduction per train type vs do-nothing (min/train)
@@ -707,6 +775,8 @@ function cba(pkg, P, sims){
   let timeBen = 0;
   if (f.C) timeBen = (trav.ldLineSaving - P.shareLund / 100 * trav.reloc) * ldDay * P.paxLoadLD / 60 * votW * 365;
   else if (f.D) timeBen = (trav.ldDoor * ldDay * P.paxLoadLD + trav.regLineSaving * regDay * P.paxLoadReg) / 60 * votW * 365;
+  // Ostlänken: the 30–40 min Stockholm–Copenhagen stake is unlocked only if Lund is fixed [S8][S13]
+  if (P.ostlanken && (f.C || f.D)) timeBen *= P.ostFactor;
   // freight operating time on the chord (signed: can be negative when the chord is longer)
   let frBen = 0;
   if (f.B || f.D) frBen = trav.frDoor * frDay * P.frValue / 60 * 365;
@@ -841,7 +911,8 @@ function freightBreakEven(P, pkg){
 function closureResilience(P, pkg){
   const f = flagsOf(pkg);
   const days = f.D ? P.dClosureDays : 0;
-  const dailyTrains = (P.tphReg + P.tphLD + P.tphFr) * P.dailyFactor * 2;
+  const e = externalDemand(P); // scheduled through-Lund trains (post levers & caps)
+  const dailyTrains = (e.reg + e.ld + e.fr) * P.dailyFactor * 2;
   const extraMinPerTrain = f.D ? 60 : (f.B && P.bVariant === "b1" ? 20 : 8); // no diversion vs single-track fallback
   return { days, corridorBlocked: !!f.D, dailyTrains, extraMinPerTrain,
            extraTrainHoursPerYear: days * dailyTrains * extraMinPerTrain / 60 };
@@ -1014,6 +1085,33 @@ function renderAnswer(){
   })() : "";
   const fUnsolved = freightUnsolved(S)
     ? `<p style="color:var(--bad)"><b>Freight unsolved:</b> Alt D is on but Alt B is off — long trains/DG would still pass through central Lund. The UI couples D⇒B; this flags a stale or hand-edited state.</p>` : "";
+  // ---- external factors / "Lund relevance" report ----
+  const ex = externalDemand(S);
+  const schedT = ex.sched.reg + ex.sched.ld + ex.sched.fr;
+  const throughT = ex.reg + ex.ld + ex.fr;
+  const supT = ex.supPax + ex.supFr;
+  const levers = [];
+  if (+S.fleetSeats !== 711) levers.push(`${S.fleetSeats}-seat fleet${+S.fleetSeats >= 990 && S.ddGauge !== "cleared" ? " (gauge-confined to SE)" : ""}`);
+  if (S.metro2040) levers.push(`metro −${S.metroShare}% x-sound regional`);
+  if (S.hhLink) levers.push("HH link −10% bridge pax");
+  if (S.substShare > 0) levers.push(`substitution −${S.substShare}% regional`);
+  if (+S.frTrainLen === 850) levers.push("850 m freight trains");
+  if (S.policyPush > 0) levers.push(`policy push +${S.policyPush}% freight`);
+  if (S.oreLadder !== "t0" || !S.borderCtrl) levers.push(`chain cap ${ex.caps.paxCap} pax tph`);
+  if (S.ostlanken) levers.push(`Ostlänken ×${S.ostFactor} LD time value`);
+  // what would do-nothing look like WITHOUT any external factors (the pre-add-on model)?
+  const NEUTRAL_EXT = { oreLadder: "t2", borderCtrl: false, xSoundShare: 0, frBridgeShare: 0, opsHaircut: 0, fleetSeats: "711", ddGauge: "cleared", frTrainLen: "730", metro2040: false, hhLink: false, substShare: 0, policyPush: 0, fehmarnFast: false };
+  const rawDnUtil = capacityOf("dn", Object.assign({}, S, NEUTRAL_EXT)).utilCentral;
+  const leverNote = vd.dn.v !== "INFEASIBLE" && rawDnUtil >= 1
+    ? ` <b>Headline:</b> do-nothing survives here ONLY because external factors cut the flow — without them the 2-track section fails (${(rawDnUtil * 100).toFixed(0)}%). The levers substitute for Alt A's capacity.`
+    : "";
+  const extLine = (Math.abs(schedT - demT) > 0.05 || supT > 0.02 || levers.length)
+    ? `<p><b>External factors:</b> the corridor carries <b>${throughT.toFixed(1)} of ${demT.toFixed(1)} tph/dir</b> demanded (scheduled ${schedT.toFixed(1)} after demand levers).` +
+      (supT > 0.02
+        ? ` <b style="color:var(--warn)">Upstream caps bind first:</b> ${ex.supPax.toFixed(1)} pax + ${ex.supFr.toFixed(1)} freight tph/dir suppressed on the Øresund/Citytunneln chain (pax cap ${ex.caps.paxCap} tph) — capacity gains at Lund are moot for trains that never arrive; fix the chain before/with Lund.`
+        : ` Upstream chain not binding (pax cap ${ex.caps.paxCap} tph).`) +
+      (levers.length ? ` Active levers: ${levers.join(" · ")}.` : "") + leverNote + `</p>`
+    : "";
   const beChips = PKGS.filter(p => p !== "dn").map(p =>
     `<span class="chip" style="background:${PKG_COLOR[p]}" title="${PKG_NAME[p]}">${pkgLabel(p)}: ${SCAN.be[p] ? SCAN.be[p].toFixed(1) + " tph" : "&gt;3×"}</span>`).join(" ");
   const flipTxt = SCAN.flips.length > 1
@@ -1036,6 +1134,7 @@ function renderAnswer(){
     ${fUnsolved}
     ${cLine}
     ${frLine}
+    ${extLine}
     <p>${curveNote}</p>
     <div class="flip"><b>Break-even demand (BCR = 1.0)</b>: ${beChips}<br>${flipTxt}</div>`;
 }
@@ -1053,6 +1152,10 @@ function renderKPIs(){
     card("LD speed via corridor", o.trav.ldSpeed.toFixed(0) + " km/h", sel.includes("A") && !sel.includes("C") && !sel.includes("D") ? "unchanged by A — capacity, not speed" : `do-nothing ${dn.trav.ldSpeed.toFixed(0)} km/h`) +
     card("NPV (40 y, 3.5%)", (o.cba.npv >= 0 ? "+" : "") + fmtBn(o.cba.npv) + " bn", `opens ${o.cba.open}${flagsOf(sel).D ? " · " + S.dClosureDays + " closure d/yr (no diversion)" : ""}`, o.cba.npv < 0 ? "bad" : "ok") +
     card("BCR", isFinite(o.cba.bcr) ? o.cba.bcr.toFixed(2) : "—", FBE != null ? `freight break-even ${FBE.toFixed(0)} trains/day (now ${S.frDaily})` : (SCAN && SCAN.be[sel] ? `break-even ${SCAN.be[sel].toFixed(1)} tph/dir (now ${(S.tphReg + S.tphLD + S.tphFr).toFixed(1)})` : "no break-even ≤3× demand"), o.cba.bcr < 1 ? "warn" : "ok") +
+    (() => { const ex = externalDemand(S), sup = ex.supPax + ex.supFr;
+      return card("External caps", sup > 0.02 ? `${sup.toFixed(1)} tph suppressed` : "not binding",
+        sup > 0.02 ? `Øresund/Citytunneln chain caps pax at ${ex.caps.paxCap} tph — Lund is upstream-limited` : `chain cap ${ex.caps.paxCap} pax + ${ex.caps.oreFrCap} freight tph · corridor carries ${(ex.reg + ex.ld + ex.fr).toFixed(1)} of ${(S.tphReg + S.tphLD + S.tphFr).toFixed(1)} tph/dir`,
+        sup > 0.02 ? "warn" : ""); })() +
     (flagsOf(sel).D ? (() => { const cr = closureResilience(S, sel); return card("Closure resilience", "none — no diversion", cr.days + " d/yr corridor blocked · ≈" + (cr.extraTrainHoursPerYear / 1000).toFixed(0) + "k train-h/yr", "bad"); })()
       : flagsOf(sel).B ? (() => { const cr = closureResilience(S, sel); return card("Closure resilience", "partial", "one track / classic pair can keep running (≈" + cr.extraMinPerTrain + " min/train on failure days)", "warn"); })()
       : "");
@@ -1339,6 +1442,8 @@ function animTick(now){
 /* ---------- init ---------- */
 function applyPreset(name){
   if (PRESETS[name]) Object.assign(S, PRESETS[name]);
+  // Fehmarn fast ramp: the 2035 preset jumps toward the 2045 freight values when the toggle is on
+  if (name === "2035" && S.fehmarnFast) Object.assign(S, { tphFr: 2.5, frDaily: 120 });
   saveState(); buildControls(); scheduleRecompute(); markPreset();
 }
 function markPreset(){
